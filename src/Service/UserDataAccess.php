@@ -4,6 +4,8 @@
 namespace App\Service;
 
 
+use App\Entity\User;
+
 class UserDataAccess extends DataAccess
 {
     public function getUserById($id) {
@@ -17,5 +19,21 @@ class UserDataAccess extends DataAccess
         return parent::executeSQL(
             "SELECT * FROM usuarios;"
         )->fetchAll();
+    }
+
+    public function addUser(User $user) {
+        return parent::executeSQL(
+            "INSERT INTO usuarios (name, last_name, category, role, profile_picture, password, birth_date, email) 
+                    VALUES (:name, :lastName, :category, :role, :picture, :password, :birthDate, :email);", [
+                "name" => $user->getName(),
+                "lastName" => $user->getLastName(),
+                "category" => $user->getCategory(),
+                "role" => $user->getRole(),
+                "picture" => $user->getProfilePicture(),
+                "password" => $user->getPassword(),
+                "birthDate" => $user->getBirthDate(),
+                "email" => $user->getEmail(),
+            ]
+        );
     }
 }

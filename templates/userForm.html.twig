@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Añadir usuario{% endblock %}
+
+{% block body %}
+    <a href="{{ path('users') }}" class="btn btn-primary">Volver</a>
+
+    <div class="col-md-8 mx-auto">
+        {{ form_start(form) }}
+
+        <!-- NAME & LASTNAME -->
+        <div class="form-row">
+            <div class="form-group col-12 col-md-6">
+                {{ form_label(form.name, null, {'label_attr': {'class': 'col-12 col-sm-12'}}) }}
+                {{ form_widget(form.name, {'attr': {'class' : 'col-11'}}) }}
+                <div class="form-error">
+                    {{ form_errors(form.name) }}
+                </div>
+            </div>
+            <div class="form-group col-12 col-md-6">
+                {{ form_label(form.lastName, null, {'label_attr': {'class': 'col-12 col-sm-12'}}) }}
+                {{ form_widget(form.lastName, {'attr': {'class' : 'col-11'}}) }}
+            </div>
+        </div>
+
+        <!-- ROLE & CATEGORY -->
+        <div class="form-row">
+            <div class="form-group col-12 col-md-6">
+                {{ form_label(form.role, null, {'label_attr': {'class': 'col-12 col-sm-12'}}) }}
+                {{ form_widget(form.role, {'attr': {'class' : 'col-11'}}) }}
+                <div class="form-error">
+                    {{ form_errors(form.role) }}
+                </div>
+            </div>
+            <div class="form-group col-12 col-md-6">
+                {{ form_label(form.category, null, {'label_attr': {'class': 'col-12 col-sm-12'}}) }}
+                {{ form_widget(form.category, {'attr': {'class' : 'col-11'}}) }}
+            </div>
+        </div>
+
+        <!-- EMAIL & BIRTHDATE -->
+        <div class="form-row">
+            <div class="form-group col-12 col-md-6">
+                {{ form_label(form.email, null, {'label_attr': {'class': 'col-12 col-sm-12'}}) }}
+                {{ form_widget(form.email, {'attr': {'class' : 'col-11'}}) }}
+                <div class="form-error">
+                    {{ form_errors(form.email) }}
+                </div>
+            </div>
+            <div class="form-group col-12 col-md-6">
+                {{ form_label(form.birthDate, null, {'label_attr': {'class': 'col-12 col-sm-12'}}) }}
+                {{ form_widget(form.birthDate, {'attr': {'class' : 'col-11'}}) }}
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-12 col-md-6">
+                {{ form_label(form.password, null, {'label_attr': {'class': 'col-12 col-sm-12'}}) }}
+                {{ form_widget(form.password, {'attr': {'class' : 'col-11'}}) }}
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-10 col-md-3">
+                {{ form_label(form.profilePicture, null, {'label_attr': {'class': 'col-12 col-sm-12'}}) }}
+                {{ form_widget(form.profilePicture, {'attr': {'class' : 'col-1 col-sm-1'}}) }}
+            </div>
+        </div>
+
+
+
+
+        {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary mt-3 mx-auto d-block border-radius-3'}}) }}
+
+
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

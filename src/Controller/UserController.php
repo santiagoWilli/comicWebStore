@@ -8,19 +8,18 @@ use App\Service\UserDataAccess;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Exception;
 
-class DefaultController extends AbstractController
+class UserController extends AbstractController
 {
     /**
-     * @Route("/", name="index")
+     * @Route("/users", name="users")
      * @return Response
-     * @throws Exception
      */
-    public function index(UserDataAccess $dataAccess)
-    {
+    public function users(UserDataAccess $dataAccess) {
+        $users = $dataAccess->getAllUsers();
 
-        return $this->render('index.html.twig', [
+        return $this->render('users.html.twig', [
+            "userList" => $users,
         ]);
     }
 }

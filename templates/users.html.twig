@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ComicWebStore - Usuarios{% endblock %}
+
+{% block body %}
+    <a href="" class="btn btn-primary">Añadir usuario</a>
+
+    <div class="table-responsive">
+        <table id="table_dataTable">
+            {% for user in userList %}
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready( function () {
+            $('#table_dataTable').DataTable();
+        } );
+    </script>
+{% endblock %}

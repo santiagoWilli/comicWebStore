@@ -21,9 +21,12 @@ class UserController extends AbstractController
     public function users(UserDataAccess $dataAccess) {
         $users = $dataAccess->getAllUsers();
 
-
         $images = array();
         foreach ($users as $key => $user) {
+            if ($user['profile_picture'] == null){
+                $images[$key] = null;
+                continue;
+            }
             $images[$key] = base64_encode($user['profile_picture']);
         }
 

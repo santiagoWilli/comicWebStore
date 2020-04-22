@@ -31,7 +31,7 @@ class UserDataAccess extends DataAccess
                 "role" => $user->getRole(),
                 "picture" => self::imageFileToBinary($user->getProfilePicture()),
                 "password" => $user->getPassword(),
-                "birthDate" => $user->getBirthDate()->format('Y/m/d H:i:s'),
+                "birthDate" => $user->getBirthDate()->format('Y/m/d'),
                 "email" => $user->getEmail(),
             ]
         );

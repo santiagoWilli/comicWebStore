@@ -21,8 +21,15 @@ class UserController extends AbstractController
     public function users(UserDataAccess $dataAccess) {
         $users = $dataAccess->getAllUsers();
 
+
+        $images = array();
+        foreach ($users as $key => $user) {
+            $images[$key] = base64_encode($user['profile_picture']);
+        }
+
         return $this->render('users.html.twig', [
             "userList" => $users,
+            "images" => $images,
         ]);
     }
 

@@ -5,9 +5,34 @@
 {% block body %}
     <a href="{{ path('addUser') }}" class="btn btn-primary">Añadir usuario</a>
 
-    <div class="table-responsive">
-        <table id="table_dataTable">
-            {% for user in userList %}
+    <div class="table-responsive mt-4">
+        <table id="table_dataTable" class="table">
+            <thead>
+                <tr class="table-primary">
+                    <th>Foto de perfil</th>
+                    <th>Nombre</th>
+                    <th>Apellidos</th>
+                    <th>Categoría</th>
+                    <th>Rol</th>
+                    <th>Fecha de nacimiento</th>
+                    <th>Email</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            {% for key, user in userList %}
+                <tr>
+                    <td><img class="" src="data:image/png;base64,{{ images[key] }}" width="50" height="50"/></td>
+                    <td>{{user.name}}</td>
+                    <td>{{user.last_name}}</td>
+                    <td>{{user.category}}</td>
+                    <td>{{user.role}}</td>
+                    <td>{{ user.birth_date }}</td>
+                    <td>{{user.email}}</td>
+                    <td>
+                        <img src="assets/svgs/user-edit.svg" width="35" height="35" class="p-2">
+                        <img src="assets/svgs/user-minus.svg" width="35" height="35" class="p-2">
+                    </td>
+                </tr>
             {% endfor %}
         </table>
     </div>
@@ -17,6 +42,6 @@
     <script>
         $(document).ready( function () {
             $('#table_dataTable').DataTable();
-        } );
+        });
     </script>
 {% endblock %}

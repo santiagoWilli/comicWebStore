@@ -29,11 +29,16 @@ class UserDataAccess extends DataAccess
                 "lastName" => $user->getLastName(),
                 "category" => $user->getCategory(),
                 "role" => $user->getRole(),
-                "picture" => $user->getProfilePicture(),
+                "picture" => self::imageFileToBinary($user->getProfilePicture()),
                 "password" => $user->getPassword(),
-                "birthDate" => $user->getBirthDate(),
+                "birthDate" => $user->getBirthDate()->format('Y/m/d H:i:s'),
                 "email" => $user->getEmail(),
             ]
         );
+    }
+
+    private static function imageFileToBinary($file) {
+        $strm = fopen($file->getRealPath(),'rb');
+        return stream_get_contents($strm);
     }
 }

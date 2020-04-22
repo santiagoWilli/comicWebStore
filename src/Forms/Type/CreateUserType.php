@@ -35,9 +35,12 @@ class CreateUserType extends AbstractType
             ->add('email', EmailType::class, [
                 'label' => "Email",
             ])
-            ->add('birthDate', TextType::class, [
+            ->add('birthDate', DateType::class, [
                 'label' => "Fecha de nacimiento",
-                'required' => false,
+                'widget' => 'single_text',
+                'placeholder' => [
+                    'year' => 'Año', 'month' => 'Mes', 'day' => 'Dia',
+                ]
             ])
             ->add('profilePicture', FileType::class, [
                 'label' => "Foto de perfil",

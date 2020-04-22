@@ -43,6 +43,7 @@ class User
      */
     private $email;
 
+
     private $birthDate;
 
     /**

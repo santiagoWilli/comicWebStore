@@ -50,10 +50,10 @@ class UserController extends AbstractController
             $success = $dataAccess->addUser($form->getData());
 
             if($success) {
-                $this->addFlash('success', "Creado!");
+                $this->addFlash('success', "¡Creado!");
                 return $this->redirectToRoute('users');
             } else {
-                $this->addFlash('warning', "Fallooooo!");
+                $this->addFlash('warning', "Error al crear el usuario");
             }
         }
 

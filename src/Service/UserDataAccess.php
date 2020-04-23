@@ -29,7 +29,7 @@ class UserDataAccess extends DataAccess
                 "lastName" => $user->getLastName(),
                 "category" => $user->getCategory(),
                 "role" => $user->getRole(),
-                "picture" => self::imageFileToBinary($user->getProfilePicture()),
+                "picture" => is_null($image = $user->getProfilePicture()) ? null : self::imageFileToBinary($image),
                 "password" => $user->getPassword(),
                 "birthDate" => $user->getBirthDate()->format('Y/m/d'),
                 "email" => $user->getEmail(),

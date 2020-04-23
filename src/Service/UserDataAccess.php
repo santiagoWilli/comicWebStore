@@ -37,6 +37,32 @@ class UserDataAccess extends DataAccess
         );
     }
 
+    public function editUser(User $user, $id) {
+        $params = [
+            "name" => $user->getName(),
+            "lastName" => $user->getLastName(),
+            "category" => $user->getCategory(),
+            "role" => $user->getRole(),
+            "password" => $user->getPassword(),
+            "birthDate" => $user->getBirthDate()->format('Y/m/d'),
+            "email" => $user->getEmail(),
+            "id" => $id,
+        ];
+
+        if(is_null($user->getProfilePicture())){
+            $sql = "UPDATE usuarios SET name = :name, last_name = :lastName, category = :category, role = :role,
+                  password = :password, birth_date = :birthDate, email = :email WHERE id = :id;";
+        } else {
+            $sql = "UPDATE usuarios SET name = :name, last_name = :lastName, category = :category, role = :role, 
+                    profile_picture = :picture, password = :password, birth_date = :birthDate, email = :email WHERE id = :id;";
+            $params["picture"] = self::imageFileToBinary($user->getProfilePicture());
+        }
+        return parent::executeSQL(
+            $sql, $params
+        );
+    }
+
+
     public function deleteUser($id) {
         return parent::executeSQL(
             "DELETE FROM usuarios where id = :id;",

@@ -47,7 +47,7 @@ class CreateUserType extends AbstractType
                 'required' => false,
             ])
             ->add('save', SubmitType::class, [
-                'label' => "Añadir",
+                'label' => "Guardar",
             ]);
     }
 }

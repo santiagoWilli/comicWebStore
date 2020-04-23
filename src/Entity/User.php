@@ -3,8 +3,9 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Constraints\Date;
+use Exception;
 
 class User
 {
@@ -55,6 +56,32 @@ class User
      */
     private $profilePicture;
 
+    /**
+     * User constructor.
+     * @param $name
+     * @param $lastName
+     * @param $role
+     * @param $category
+     * @param $password
+     * @param $email
+     * @param $birthDate
+     * @param $profilePicture
+     */
+
+    public function __construct($name = null, $lastName = null, $role = null, $category = null, $password = null, $email = null, $birthDate = null, $profilePicture = null)
+    {
+        $this->name = $name;
+        $this->lastName = $lastName;
+        $this->role = $role;
+        $this->category = $category;
+        $this->password = $password;
+        $this->email = $email;
+        try {
+            $this->birthDate = new DateTime($birthDate);
+        } catch (Exception $e) {
+        }
+        $this->profilePicture = $profilePicture;
+    }
 
     /**
      * @return mixed

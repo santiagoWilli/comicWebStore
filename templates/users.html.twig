@@ -39,7 +39,7 @@
                             <input type="hidden" name="userID" value="{{ user.id }}">
                             <img src="assets/svgs/user-edit.svg" width="35" height="35" class="p-2">
                         </button>
-                        <button class="btn">
+                        <button class="btn deleteUser" onclick="deleteUser({{ user.id }})">
                             <input type="hidden" name="delete-user" value="{{ user.id }}">
                             <input type="hidden" name="userID" value="{{ user.id }}">
                             <img src="assets/svgs/user-minus.svg" width="35" height="35" class="p-2">
@@ -53,6 +53,7 @@
 {% endblock %}
 
 {% block javascripts %}
+    <script src="{{ asset('assets/js/delete-user.js') }}"></script>
     <script>
         $(document).ready( function () {
             $('#table_dataTable').DataTable({

@@ -37,6 +37,15 @@ class UserDataAccess extends DataAccess
         );
     }
 
+    public function deleteUser($id) {
+        return parent::executeSQL(
+            "DELETE FROM usuarios where id = :id;",
+            [
+                "id" => $id
+            ]
+        );
+    }
+
     private static function imageFileToBinary($file) {
         $strm = fopen($file->getRealPath(),'rb');
         return stream_get_contents($strm);

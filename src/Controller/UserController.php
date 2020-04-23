@@ -8,6 +8,7 @@ use App\Entity\User;
 use App\Forms\Type\CreateUserType;
 use App\Service\UserDataAccess;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -61,4 +62,17 @@ class UserController extends AbstractController
         ]);
 
     }
+
+    /**
+     * @Route("/users/delete", methods={"POST"}, name="deleteUser")
+     * @return Response
+     */
+    public function deleteUser(UserDataAccess $dataAccess, Request $request) {
+        $success = false;
+        if($request->request->has("id")){
+            $success = $dataAccess->deleteUser($request->request->get("id"));
+        }
+        return new JsonResponse(json_encode($success));
+    }
+
 }

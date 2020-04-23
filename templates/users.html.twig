@@ -27,12 +27,12 @@
                         {% else %}
                         <td class="text-center"><img src="{{ path_default_picture }}" width="50" height="50"></td>
                     {% endif %}
-                    <td>{{user.name}}</td>
-                    <td>{{user.last_name}}</td>
-                    <td>{{user.category}}</td>
-                    <td>{{user.role}}</td>
-                    <td>{{ user.birth_date }}</td>
-                    <td>{{user.email}}</td>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.last_name }}</td>
+                    <td>{{ user.category }}</td>
+                    <td>{{ user.role }}</td>
+                    <td>{{ user.birth_date | date("d/m/Y") }}</td>
+                    <td>{{ user.email }}</td>
                     <td>
                         <a class="btn" href="{{ path('editUser', {'id': user.id}) }}">
                             <img src="assets/svgs/user-edit.svg" width="35" height="35" class="p-2">

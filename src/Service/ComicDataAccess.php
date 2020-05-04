@@ -20,9 +20,4 @@ class ComicDataAccess extends DataAccess
             "SELECT * FROM comics;"
         )->fetchAll();
     }
-
-    private static function imageFileToBinary($file) {
-        $strm = fopen($file->getRealPath(),'rb');
-        return stream_get_contents($strm);
-    }
 }

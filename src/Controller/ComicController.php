@@ -34,7 +34,7 @@ class ComicController extends AbstractController
             $images[$key] = base64_encode($comic['image']);
         }
 
-        return $this->render('listComics.html.twig', [
+        return $this->render('comics.html.twig', [
             "comicList" => $comics,
             "images" => $images,
         ]);

@@ -13,7 +13,7 @@
                 <th>Título</th>
                 <th>Descripción</th>
                 <th>Precio</th>
-                <th>Publisher</th>
+                <th>Editorial</th>
                 <th>Género</th>
                 <th>Fecha lanzamiento</th>
                 <th>Stock</th>
@@ -45,4 +45,15 @@
             </tbody>
         </table>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('assets/js/delete-user.js') }}"></script>
+    <script>
+        $(document).ready( function () {
+            $('#table_dataTable').DataTable({
+            });
+        });
+
+    </script>
 {% endblock %}

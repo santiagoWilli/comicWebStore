@@ -55,13 +55,12 @@ class UserDataAccess extends DataAccess
         } else {
             $sql = "UPDATE usuarios SET name = :name, last_name = :lastName, category = :category, role = :role, 
                     profile_picture = :picture, password = :password, birth_date = :birthDate, email = :email WHERE id = :id;";
-            $params["picture"] = self::imageFileToBinary($user->getProfilePicture());
+            $params["picture"] = FileUtils::imageFileToBinary($user->getProfilePicture());
         }
         return parent::executeSQL(
             $sql, $params
         );
     }
-
 
     public function deleteUser($id) {
         return parent::executeSQL(
@@ -70,10 +69,5 @@ class UserDataAccess extends DataAccess
                 "id" => $id
             ]
         );
-    }
-
-    private static function imageFileToBinary($file) {
-        $strm = fopen($file->getRealPath(),'rb');
-        return stream_get_contents($strm);
     }
 }

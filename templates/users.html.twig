@@ -12,7 +12,6 @@
                     <th>Foto de perfil</th>
                     <th>Nombre</th>
                     <th>Apellidos</th>
-                    <th>Categoría</th>
                     <th>Rol</th>
                     <th>Fecha de nacimiento</th>
                     <th>Email</th>
@@ -29,7 +28,6 @@
                     {% endif %}
                     <td>{{ user.name }}</td>
                     <td>{{ user.last_name }}</td>
-                    <td>{{ user.category }}</td>
                     <td>{{ user.role }}</td>
                     <td>{{ user.birth_date | date("d/m/Y") }}</td>
                     <td>{{ user.email }}</td>

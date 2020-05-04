@@ -26,9 +26,6 @@ class CreateUserType extends AbstractType
             ->add('role', TextType::class, [
                 'label' => "Rol",
             ])
-            ->add('category', TextType::class, [
-                'label' => "Categoría",
-            ])
             ->add('password', TextType::class, [
                 'label' => "Contraseña",
             ])

@@ -29,12 +29,6 @@ class User
 
     /**
      * @Assert\NotBlank
-     * @Assert\Length(max=32)
-     */
-    private $category;
-
-    /**
-     * @Assert\NotBlank
      * @Assert\Length(max=255)
      */
     private $password;
@@ -61,19 +55,17 @@ class User
      * @param $name
      * @param $lastName
      * @param $role
-     * @param $category
      * @param $password
      * @param $email
      * @param $birthDate
      * @param $profilePicture
      */
 
-    public function __construct($name = null, $lastName = null, $role = null, $category = null, $password = null, $email = null, $birthDate = null, $profilePicture = null)
+    public function __construct($name = null, $lastName = null, $role = null, $password = null, $email = null, $birthDate = null, $profilePicture = null)
     {
         $this->name = $name;
         $this->lastName = $lastName;
         $this->role = $role;
-        $this->category = $category;
         $this->password = $password;
         $this->email = $email;
         try {
@@ -129,22 +121,6 @@ class User
     public function setRole($role): void
     {
         $this->role = $role;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCategory()
-    {
-        return $this->category;
-    }
-
-    /**
-     * @param mixed $category
-     */
-    public function setCategory($category): void
-    {
-        $this->category = $category;
     }
 
     /**

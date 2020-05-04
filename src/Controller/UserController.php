@@ -84,7 +84,7 @@ class UserController extends AbstractController
     public function editUser($id, UserDataAccess $dataAccess, Request $request) {
 
         $user_array= $dataAccess->getUserById($id);
-        $user = new User($user_array["name"], $user_array["last_name"], $user_array["role"], $user_array["category"],
+        $user = new User($user_array["name"], $user_array["last_name"], $user_array["role"],
             $user_array["password"], $user_array["email"], $user_array["birth_date"]);
 
         $form = $this->createForm(CreateUserType::class, $user);

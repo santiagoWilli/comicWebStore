@@ -10,26 +10,25 @@ class UserDataAccess extends DataAccess
 {
     public function getUserById($id) {
         return parent::executeSQL(
-            "SELECT * FROM usuarios WHERE id = :id;", [
+            "SELECT * FROM users WHERE id = :id;", [
                 "id" => $id
             ])->fetch();
     }
 
     public function getAllUsers() {
         return parent::executeSQL(
-            "SELECT * FROM usuarios;"
+            "SELECT * FROM users;"
         )->fetchAll();
     }
 
     public function addUser(User $user) {
         return parent::executeSQL(
-            "INSERT INTO usuarios (name, last_name, category, role, profile_picture, password, birth_date, email) 
-                    VALUES (:name, :lastName, :category, :role, :picture, :password, :birthDate, :email);", [
+            "INSERT INTO users (name, last_name, role, profile_picture, password, birth_date, email) 
+                    VALUES (:name, :lastName, :role, :picture, :password, :birthDate, :email);", [
                 "name" => $user->getName(),
                 "lastName" => $user->getLastName(),
-                "category" => $user->getCategory(),
                 "role" => $user->getRole(),
-                "picture" => is_null($image = $user->getProfilePicture()) ? null : self::imageFileToBinary($image),
+                "picture" => is_null($image = $user->getProfilePicture()) ? null : FileUtils::imageFileToBinary($image),
                 "password" => $user->getPassword(),
                 "birthDate" => $user->getBirthDate()->format('Y/m/d'),
                 "email" => $user->getEmail(),
@@ -41,7 +40,6 @@ class UserDataAccess extends DataAccess
         $params = [
             "name" => $user->getName(),
             "lastName" => $user->getLastName(),
-            "category" => $user->getCategory(),
             "role" => $user->getRole(),
             "password" => $user->getPassword(),
             "birthDate" => $user->getBirthDate()->format('Y/m/d'),
@@ -50,10 +48,10 @@ class UserDataAccess extends DataAccess
         ];
 
         if(is_null($user->getProfilePicture())){
-            $sql = "UPDATE usuarios SET name = :name, last_name = :lastName, category = :category, role = :role,
+            $sql = "UPDATE users SET name = :name, last_name = :lastName, role = :role,
                   password = :password, birth_date = :birthDate, email = :email WHERE id = :id;";
         } else {
-            $sql = "UPDATE usuarios SET name = :name, last_name = :lastName, category = :category, role = :role, 
+            $sql = "UPDATE users SET name = :name, last_name = :lastName, role = :role, 
                     profile_picture = :picture, password = :password, birth_date = :birthDate, email = :email WHERE id = :id;";
             $params["picture"] = FileUtils::imageFileToBinary($user->getProfilePicture());
         }
@@ -64,7 +62,7 @@ class UserDataAccess extends DataAccess
 
     public function deleteUser($id) {
         return parent::executeSQL(
-            "DELETE FROM usuarios where id = :id;",
+            "DELETE FROM users where id = :id;",
             [
                 "id" => $id
             ]

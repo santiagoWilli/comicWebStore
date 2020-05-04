@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ComicWebStore - Lista Cómics{% endblock %}
+
+{% block body %}
+    <h3 class="text-center mt-3">Lista de cómics</h3>
+    <div class="table-responsive mt-4 col-auto">
+        <a href="" class="btn btn-primary mb-3 float-right">Añadir cómic</a>
+        <table id="table_dataTable" class="table table-bordered" style="width: 100%">
+            <thead>
+            <tr class="table-primary">
+                <th>Imagen</th>
+                <th>Título</th>
+                <th>Descripción</th>
+                <th>Precio</th>
+                <th>Publisher</th>
+                <th>Género</th>
+                <th>Fecha lanzamiento</th>
+                <th>Stock</th>
+                <th>Autor</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for key, comic in comicList %}
+                <tr>
+                    {% if (images[key] != null) %}
+                        <td class="text-center"><img src="data:image/png;base64,{{ images[key] }}" width="50" height="50"/></td>
+                    {% else %}
+                        <td class="text-center"><img src="{{ path_default_picture }}" width="50" height="50"></td>
+                    {% endif %}
+                    <td>{{ comic.title }}</td>
+                    <td>{{ comic.description }}</td>
+                    <td>{{ comic.price }}</td>
+                    <td>{{ comic.publisher }}</td>
+                    <td>{{ comic.genre }}</td>
+                    <td>{{ comic.release_date | date("d/m/Y") }}</td>
+                    <td>{{ comic.stock }}</td>
+                    <td>{{ comic.author }}</td>
+                    <td>
+
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

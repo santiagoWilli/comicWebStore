@@ -1,7 +1,9 @@
-{% extends "base.html.twig" %}
+{% extends "public/base.html.twig" %}
 
 {% block title %}ComicWebStore{% endblock %}
 
 {% block body %}
+    {% include 'public/navbar.html.twig' %}
+
     <a href="{{ path('listcomics') }}" class="btn btn-primary">Iniciar sesión como administrador</a>
 {% endblock %}

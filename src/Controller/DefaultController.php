@@ -20,7 +20,7 @@ class DefaultController extends AbstractController
     public function index(UserDataAccess $dataAccess)
     {
 
-        return $this->render('index.html.twig', [
+        return $this->render('public/index.html.twig', [
         ]);
     }
 }

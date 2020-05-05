@@ -72,7 +72,7 @@ class ComicController extends AbstractController
             }
         }
 
-        return $this->render('addComicForm.html.twig', [
+        return $this->render('admin/addComicForm.html.twig', [
             'form' => $form->createView(),
         ]);
 

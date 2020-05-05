@@ -5,9 +5,10 @@
         <title>{% block title %}{% endblock %}</title>
         <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/css/datatables.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/admin.css') }}">
         {% block stylesheets %}{% endblock %}
     </head>
-    <body class="px-1 py-2">
+    <body>
         {% block body %}{% endblock %}
         <script type="text/javascript" src="{{ asset('assets/js/jquery-3.5.0.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('assets/js/datatables.min.js') }}"></script>

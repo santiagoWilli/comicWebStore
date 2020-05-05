@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Constraints\DateTime;
 class UserController extends AbstractController
 {
     /**
-     * @Route("/users", name="users")
+     * @Route("/admin/users", name="listUsersAsAdmin")
      * @return Response
      */
     public function users(UserDataAccess $dataAccess) {
@@ -33,14 +33,14 @@ class UserController extends AbstractController
             $images[$key] = base64_encode($user['profile_picture']);
         }
 
-        return $this->render('users.html.twig', [
+        return $this->render('admin/users.html.twig', [
             "userList" => $users,
             "images" => $images,
         ]);
     }
 
     /**
-     * @Route("/users/add", name="addUser")
+     * @Route("/admin//users/add", name="addUser")
      * @return Response
      */
     public function addUser(UserDataAccess $dataAccess, Request $request) {
@@ -59,14 +59,14 @@ class UserController extends AbstractController
             }
         }
 
-        return $this->render('addUserForm.html.twig', [
+        return $this->render('admin/addUserForm.html.twig', [
             'form' => $form->createView(),
         ]);
 
     }
 
     /**
-     * @Route("/users/delete", methods={"POST"}, name="deleteUser")
+     * @Route("/admin//users/delete", methods={"POST"}, name="deleteUser")
      * @return Response
      */
     public function deleteUser(UserDataAccess $dataAccess, Request $request) {
@@ -78,7 +78,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/users/edit/{id}", name="editUser")
+     * @Route("/admin//users/edit/{id}", name="editUser")
      * @return Response
      */
     public function editUser($id, UserDataAccess $dataAccess, Request $request) {
@@ -101,7 +101,7 @@ class UserController extends AbstractController
             }
         }
 
-        return $this->render('editUserForm.html.twig', [
+        return $this->render('admin/editUserForm.html.twig', [
             'form' => $form->createView(),
         ]);
 

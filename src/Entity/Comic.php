@@ -17,7 +17,7 @@ class Comic
 
     /**
      * @Assert\NotBlank
-     * @Assert\Length(max=128)
+     * @Assert\Length(max=500)
      */
     private $description;
 
@@ -28,10 +28,9 @@ class Comic
     private $price;
 
     /**
-     * @Assert\NotBlank
      * @Assert\Length(max=32)
      */
-    private $publiser;
+    private $publisher;
 
     /**
      * @Assert\NotBlank
@@ -44,7 +43,6 @@ class Comic
     private $stock;
 
     /**
-     * @Assert\NotBlank
      * @Assert\Length(max=32)
      */
     private $author;
@@ -142,7 +140,7 @@ class Comic
      */
     public function getPublisher()
     {
-        return $this->publiser;
+        return $this->publisher;
     }
 
     /**

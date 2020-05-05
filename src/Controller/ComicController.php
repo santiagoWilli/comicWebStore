@@ -51,4 +51,30 @@ class ComicController extends AbstractController
         }
         return new JsonResponse(json_encode($success));
     }
+
+    /**
+     * @Route("/comics/add", name="addComic")
+     * @return Response
+     */
+    public function addComic(ComicDataAccess $dataAccess, Request $request) {
+
+        $form = $this->createForm(CreateComicType::class, new Comic());
+
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()) {
+            $success = $dataAccess->addComic($form->getData());
+
+            if($success) {
+                $this->addFlash('success', "¡Creado!");
+                return $this->redirectToRoute('listcomics');
+            } else {
+                $this->addFlash('warning', "Error al crear el comic");
+            }
+        }
+
+        return $this->render('addComicForm.html.twig', [
+            'form' => $form->createView(),
+        ]);
+
+    }
 }

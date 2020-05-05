@@ -39,4 +39,16 @@ class ComicController extends AbstractController
             "images" => $images,
         ]);
     }
+
+    /**
+     * @Route("/comics/delete", methods={"POST"}, name="deleteComic")
+     * @return Response
+     */
+    public function deleteComic(ComicDataAccess $dataAccess, Request $request) {
+        $success = false;
+        if($request->request->has("id")){
+            $success = $dataAccess->deleteComic($request->request->get("id"));
+        }
+        return new JsonResponse(json_encode($success));
+    }
 }

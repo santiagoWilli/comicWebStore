@@ -4,7 +4,7 @@
 namespace App\Service;
 
 
-use App\Entity\User;
+use App\Entity\Comic;
 
 class ComicDataAccess extends DataAccess
 {
@@ -20,4 +20,14 @@ class ComicDataAccess extends DataAccess
             "SELECT * FROM comics;"
         )->fetchAll();
     }
+
+    public function deleteComic($id) {
+        return parent::executeSQL(
+            "DELETE FROM comics where id = :id;",
+            [
+                "id" => $id
+            ]
+        );
+    }
+
 }

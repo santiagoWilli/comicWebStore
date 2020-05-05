@@ -38,7 +38,12 @@
                     <td>{{ comic.stock }}</td>
                     <td>{{ comic.author }}</td>
                     <td>
-
+                        <a class="btn" href="">
+                            <img src="assets/svgs/edit.svg" width="35" height="35" class="p-2">
+                        </a>
+                        <button class="btn deleteComic" onclick="deleteComic({{ comic.id }})">
+                            <img src="assets/svgs/delete.svg" width="35" height="35" class="p-2">
+                        </button>
                     </td>
                 </tr>
             {% endfor %}
@@ -48,7 +53,7 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script src="{{ asset('assets/js/delete-user.js') }}"></script>
+    <script src="{{ asset('assets/js/delete-comic.js') }}"></script>
     <script>
         $(document).ready( function () {
             $('#table_dataTable').DataTable({

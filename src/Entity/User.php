@@ -13,6 +13,16 @@ class User implements UserInterface
 {
     private $id;
 
+    /**
+     * @var array
+     * ROLE_ADMIN       Puede hacer cualquier acción.
+     * ROLE_USER        Usuarios autenticados de la aplicación.
+     */
+    private const ROLES = [
+        1 => "ROLE_ADMIN",
+        4 => "ROLE_USER",
+    ];
+
     private $roles = [];
 
     /**
@@ -28,8 +38,7 @@ class User implements UserInterface
     private $lastName;
 
     /**
-     * @Assert\NotBlank
-     * @Assert\Length(max=32)
+     * @Assert\Positive()
      */
     private $role;
 
@@ -68,6 +77,9 @@ class User implements UserInterface
         } catch (Exception $e) {
         }
         $this->profilePicture = $profilePicture;
+
+        $this->roles[] = 'ROLE_USER';
+        $this->roles[] = self::ROLES[$role];
     }
 
     public function getId(): string
@@ -97,11 +109,7 @@ class User implements UserInterface
      */
     public function getRoles(): array
     {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-
-        return array_unique($roles);
+        return array_unique($this->roles);
     }
 
     public function setRoles(array $roles): self

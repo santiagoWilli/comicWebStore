@@ -5,6 +5,7 @@ namespace App\Forms\Type;
 
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -23,8 +24,11 @@ class CreateUserType extends AbstractType
             ->add('lastName', TextType::class, [
                 'label' => "Apellidos",
             ])
-            ->add('role', TextType::class, [
-                'label' => "Rol",
+            ->add('role', ChoiceType::class, [
+                'choices' => array(
+                    'Administrador' => 1,
+                    'Usuario' => 4,
+                ),
             ])
             ->add('password', TextType::class, [
                 'label' => "Contraseña",

@@ -1,9 +1,9 @@
-{% extends 'base.html.twig' %}
+{% extends 'public/base.html.twig' %}
 
 {% block title %}{% endblock %}
 
 {% block body %}
-    <a href="{{ path('listcomics') }}" class="btn btn-primary">Volver</a>
+    <a href="{{ path('listComicsAsAdmin') }}" class="btn btn-primary">Volver</a>
 
     <div class="col-md-8 mx-auto">
         {{ form_start(form) }}

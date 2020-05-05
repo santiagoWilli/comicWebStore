@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Constraints\DateTime;
 class ComicController extends AbstractController
 {
     /**
-     * @Route("/listcomics", name="listcomics")
+     * @Route("/admin/listcomics", name="listComicsAsAdmin")
      * @param ComicDataAccess $dataAccess
      * @return Response
      */
@@ -34,7 +34,7 @@ class ComicController extends AbstractController
             $images[$key] = base64_encode($comic['image']);
         }
 
-        return $this->render('comics.html.twig', [
+        return $this->render('admin/comics.html.twig', [
             "comicList" => $comics,
             "images" => $images,
         ]);
@@ -66,7 +66,7 @@ class ComicController extends AbstractController
 
             if($success) {
                 $this->addFlash('success', "¡Creado!");
-                return $this->redirectToRoute('listcomics');
+                return $this->redirectToRoute('listComicsAsAdmin');
             } else {
                 $this->addFlash('warning', "Error al crear el comic");
             }
@@ -75,6 +75,7 @@ class ComicController extends AbstractController
         return $this->render('admin/addComicForm.html.twig', [
             'form' => $form->createView(),
         ]);
+
 
     }
 }

@@ -24,7 +24,7 @@
                     {% if (images[key] != null) %}
                         <td class="text-center"><img src="data:image/png;base64,{{ images[key] }}" width="50" height="50"/></td>
                     {% else %}
-                        <td class="text-center"><img src="{{ path_default_picture }}" width="50" height="50"></td>
+                        <td class="text-center"><img src="{{ asset(path_default_picture) }}" width="50" height="50"></td>
                     {% endif %}
                     <td>{{ user.name }}</td>
                     <td>{{ user.last_name }}</td>

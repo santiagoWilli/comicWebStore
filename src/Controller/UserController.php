@@ -40,7 +40,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/admin//users/add", name="addUser")
+     * @Route("/admin/users/add", name="addUser")
      * @return Response
      */
     public function addUser(UserDataAccess $dataAccess, Request $request) {
@@ -53,7 +53,7 @@ class UserController extends AbstractController
 
             if($success) {
                 $this->addFlash('success', "¡Creado!");
-                return $this->redirectToRoute('users');
+                return $this->redirectToRoute('listUsersAsAdmin');
             } else {
                 $this->addFlash('warning', "Error al crear el usuario");
             }
@@ -66,7 +66,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/admin//users/delete", methods={"POST"}, name="deleteUser")
+     * @Route("/admin/users/delete", methods={"POST"}, name="deleteUser")
      * @return Response
      */
     public function deleteUser(UserDataAccess $dataAccess, Request $request) {
@@ -78,7 +78,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/admin//users/edit/{id}", name="editUser")
+     * @Route("/admin/users/edit/{id}", name="editUser")
      * @return Response
      */
     public function editUser($id, UserDataAccess $dataAccess, Request $request) {
@@ -95,7 +95,7 @@ class UserController extends AbstractController
 
             if($success) {
                 $this->addFlash('success', "¡Modificado!");
-                return $this->redirectToRoute('users');
+                return $this->redirectToRoute('listUsersAsAdmin');
             } else {
                 $this->addFlash('warning', "Error al modificar el usuario");
             }

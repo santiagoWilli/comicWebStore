@@ -15,7 +15,7 @@ function deleteUser(id){
             console.log('El usuario ha sido borrado con éxito: ' + result);
             if(result){
                 $.ajax({
-                    url: "/comicWebStore/users/delete",
+                    url: "/comicWebStore/admin/users/delete",
                     type: "POST",
                     dataType: "json",
                     data: {

@@ -78,6 +78,7 @@ class User implements UserInterface
         }
         $this->profilePicture = $profilePicture;
 
+        if($role == null) return;
         $this->roles[] = 'ROLE_USER';
         $this->roles[] = self::ROLES[$role];
     }

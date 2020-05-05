@@ -13,8 +13,8 @@
                     <th>Nombre</th>
                     <th>Apellidos</th>
                     <th>Rol</th>
-                    <th>Fecha de nacimiento</th>
                     <th>Email</th>
+                    <th>Fecha de nacimiento</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -23,20 +23,20 @@
                 <tr>
                     {% if (images[key] != null) %}
                         <td class="text-center"><img src="data:image/png;base64,{{ images[key] }}" width="50" height="50"/></td>
-                        {% else %}
+                    {% else %}
                         <td class="text-center"><img src="{{ path_default_picture }}" width="50" height="50"></td>
                     {% endif %}
                     <td>{{ user.name }}</td>
                     <td>{{ user.last_name }}</td>
-                    <td>{{ user.role }}</td>
-                    <td>{{ user.birth_date | date("d/m/Y") }}</td>
+                    <td>{{ user.role | role }}</td>
                     <td>{{ user.email }}</td>
+                    <td>{{ user.birth_date | date("d/m/Y") }}</td>
                     <td>
-                        <a class="btn" href="{{ path('editUser', {'id': user.id}) }}">
-                            <img src="assets/svgs/user-edit.svg" width="35" height="35" class="p-2">
+                        <a class="btn btn-sm btn-primary" href="{{ path('editUser', {'id': user.id}) }}">
+                            <i class="fas fa-edit"></i>
                         </a>
-                        <button class="btn deleteUser" onclick="deleteUser({{ user.id }})">
-                            <img src="assets/svgs/user-minus.svg" width="35" height="35" class="p-2">
+                        <button class="btn btn-sm btn-danger deleteUser" onclick="deleteUser({{ user.id }})">
+                            <i class="far fa-trash-alt"></i>
                         </button>
                     </td>
                 </tr>

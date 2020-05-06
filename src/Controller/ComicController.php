@@ -75,7 +75,42 @@ class ComicController extends AbstractController
         return $this->render('admin/addComicForm.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
 
+    /**
+     * @Route("/user/listcomics", name="listComicsAsUser")
+     * @param ComicDataAccess $dataAccess
+     * @return Response
+     */
+    public function userComics(ComicDataAccess $dataAccess) {
+        $comics = $dataAccess->getAllComics();
 
+        $images = array();
+        foreach ($comics as $key => $comic) {
+            if ($comic['image'] == null){
+                $images[$key] = null;
+                continue;
+            }
+            $images[$key] = base64_encode($comic['image']);
+        }
+
+        return $this->render('public/comics.html.twig', [
+            "comicList" => $comics,
+            "images" => $images,
+        ]);
+    }
+
+    /**
+     * @Route("/user/comicInfo/{id}", name="comicInfo")
+     * @return Response
+     */
+    public function showComicInfo($id, ComicDataAccess $dataAccess){
+        $comic = $dataAccess->getComicById($id);
+        $image = base64_encode($comic['image']);
+
+        return $this->render('public/comicInfo.html.twig', [
+            "comic" => $comic,
+            "image" => $image,
+        ]);
     }
 }

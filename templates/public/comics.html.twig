@@ -1,10 +1,21 @@
 {% extends 'public/base.html.twig' %}
+
+{% block title %}ComicWebStore{% endblock %}
+
 {% block body %}
     {% include 'public/navbar.html.twig' %}
-    <div class="card-deck">
-        <div class="card">
-            <div class="card-img-top" src="">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 mt-5 mx-2">
+    {% for key, comic in comicList %}
+            <div class="col mb-4">
+                    <a class="btn" href="{{ path('comicInfo', {'id': comic.id}) }}">
+                        <div class="border-0 shadow" style="height: 30%">
+                            <img class="img-fluid w-100" src="data:image/png;base64,{{ images[key] }}"
+                                 style="height: 300px; width: 20%">
+                            <div class="my-2 text-center text-white">{{ comic.title }}</div>
+                        </div>
+                    </a>
             </div>
+    {% endfor %}
+
         </div>
-    </div>
 {% endblock %}

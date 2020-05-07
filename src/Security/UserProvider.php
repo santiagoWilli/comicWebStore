@@ -44,7 +44,7 @@ class UserProvider implements UserProviderInterface
         else
         {
             return new User($row["name"], $row["last_name"], $row["role"],
-                $row["password"], $row["email"], $row["birth_date"]);
+                $row["password"], $row["email"], $row["birth_date"], $row['profile_picture'], $row['id']);
         }
     }
 

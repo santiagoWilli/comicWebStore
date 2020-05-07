@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Entity\Comic;
 use App\Forms\Type\CreateComicType;
+use App\Forms\Type\EditComicType;
 use App\Service\ComicDataAccess;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -111,6 +112,36 @@ class ComicController extends AbstractController
         return $this->render('public/comicInfo.html.twig', [
             "comic" => $comic,
             "image" => $image,
+        ]);
+    }
+
+    /**
+     * @Route("/comics/edit/{id}", name="editComic")
+     * @return Response
+     */
+    public function editComic($id, ComicDataAccess $dataAccess, Request $request) {
+
+        $comic_array= $dataAccess->getComicById($id);
+        $comic = new Comic($comic_array["title"], $comic_array["description"], $comic_array["price"],
+            $comic_array["publisher"], $comic_array["genre"], $comic_array["release_date"], $comic_array["stock"],
+            $comic_array["author"]);
+
+        $form = $this->createForm(EditComicType::class, $comic);
+
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()) {
+            $success = $dataAccess->editComic($form->getData(), $id);
+
+            if($success) {
+                $this->addFlash('success', "¡Modificado!");
+                return $this->redirectToRoute('listComicsAsAdmin');
+            } else {
+                $this->addFlash('warning', "Error al modificar el comic");
+            }
+        }
+
+        return $this->render('admin/editComicForm.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 }

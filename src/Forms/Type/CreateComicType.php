@@ -51,7 +51,6 @@ class CreateComicType extends AbstractType
             ])
             ->add('image', FileType::class, [
                 'label' => "Imagen",
-                'required' => false,
             ])
             ->add('save', SubmitType::class, [
                 'label' => "Guardar",

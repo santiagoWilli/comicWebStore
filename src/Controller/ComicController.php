@@ -23,6 +23,7 @@ class ComicController extends AbstractController
      * @param ComicDataAccess $dataAccess
      * @return Response
      */
+
     public function comics(ComicDataAccess $dataAccess) {
         $comics = $dataAccess->getAllComics();
 

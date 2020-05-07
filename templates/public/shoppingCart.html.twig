@@ -1,0 +1,46 @@
+{% extends 'public/base.html.twig' %}
+
+{% block body %}
+    {% include 'public/navbar.html.twig' %}
+    <div class="shoppingcart m-2 px-2 py-3">
+        <table id="table_dataTable" class="table table-bordered" style="width: 100%">
+            <thead>
+            <tr class="table-primary">
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th>Total</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for key, item in comics %}
+                <tr>
+                    <td><a href="{{ path('comicInfo', {'id': item.comic.id}) }}">{{ item.comic.title }}</a></td>
+                    <td>{{ item.comic.price }} €</td>
+                    <td>{{ item.amount }}</td>
+                    <td>{{ item.amount * item.comic.price }} €</td>
+
+                    <td>
+                        <a class="btn btn-sm btn-primary" href="">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <button class="btn btn-sm btn-danger deleteUser" onclick="">
+                            <i class="far fa-trash-alt"></i>
+                        </button>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready( function () {
+            $('#table_dataTable').DataTable({
+            });
+        });
+    </script>
+{% endblock %}

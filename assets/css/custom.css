@@ -8,3 +8,8 @@ body {
     background-color: var(--base-color);
     color: var(--text-color);
 }
+
+.shoppingcart {
+    background-color: white !important;
+    color: #0c0c0c !important;
+}

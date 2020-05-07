@@ -18,15 +18,18 @@ class ShoppingCartController extends AbstractController
      */
     public function listShoppingCart(ShoppingCartAccess $shoppingCartAccess, ComicDataAccess $comicDataAccess) {
         $items = $shoppingCartAccess->getItemsFromUserWithId($this->getUser()->getId());
+
         $comics = [];
         $i = 0;
         foreach($items as $item) {
-            $comics[$i] = [$comicDataAccess->getComicById($item['comic_id']), $item['amount']];
+            $comics[$i] = [
+                'comic' => $comicDataAccess->getComicById($item['comic_id']),
+                'amount'=> $item['amount']
+            ];
             $i++;
         }
-        dump($comics);
         return $this->render('public/shoppingCart.html.twig', [
-            'comics' => $comics
+            'comics' => $comics,
         ]);
     }
 }

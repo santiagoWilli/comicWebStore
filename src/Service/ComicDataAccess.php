@@ -47,4 +47,32 @@ class ComicDataAccess extends DataAccess
         );
     }
 
+    public function editComic(Comic $comic, $id) {
+        $params = [
+            "title" => $comic->getTitle(),
+            "description" => $comic->getDescription(),
+            "price" => $comic->getPrice(),
+            "publisher" => $comic->getPublisher(),
+            "genre" => $comic->getGenre(),
+            "author" => $comic->getAuthor(),
+            "release_date" => $comic->getReleaseDate()->format('Y/m/d'),
+            "stock" => $comic->getStock(),
+            "id" => $id,
+        ];
+
+        if(is_null($comic->getImage())){
+            $sql = "UPDATE comics SET title = :title, description = :description, price = :price,
+                  publisher = :publisher, genre = :genre, author = :author, release_date = :release_date, 
+                  stock = :stock WHERE id = :id;";
+        } else {
+            $sql = "UPDATE comics SET title = :title, description = :description, price = :price,
+                  publisher = :publisher, genre = :genre, author = :author, release_date = :release_date, 
+                  image =:image, stock = :stock WHERE id = :id;";
+            $params["image"] = FileUtils::imageFileToBinary($comic->getImage());
+        }
+        return parent::executeSQL(
+            $sql, $params
+        );
+    }
+
 }

@@ -65,8 +65,9 @@ class User implements UserInterface
      */
     private $profilePicture;
 
-    public function __construct($name = null, $lastName = null, $role = null, $password = null, $email = null, $birthDate = null, $profilePicture = null)
+    public function __construct($name = null, $lastName = null, $role = null, $password = null, $email = null, $birthDate = null, $profilePicture = null, $id = null)
     {
+        $this->id = $id;
         $this->name = $name;
         $this->lastName = $lastName;
         $this->role = $role;
@@ -83,7 +84,7 @@ class User implements UserInterface
         $this->roles[] = self::ROLES[$role];
     }
 
-    public function getId(): string
+    public function getId()
     {
         return $this->id;
     }

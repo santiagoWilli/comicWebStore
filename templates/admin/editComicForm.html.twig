@@ -1,3 +1,80 @@
-{% extends 'comicForm.html.twig' %}
+{% extends 'public/base.html.twig' %}
 
 {% block title %}Modificar comic{% endblock %}
+
+{% block body %}
+    <a href="{{ path('listComicsAsAdmin') }}" class="btn btn-primary">Volver</a>
+
+    <div class="col-md-8 mx-auto">
+        {{ form_start(form) }}
+
+        <!-- TITLE & AUTHOR -->
+        <div class="form-row">
+            <div class="form-group col-12 col-md-6">
+                {{ form_label(form.title, null, {'label_attr': {'class': 'col-12 col-sm-12'}}) }}
+                {{ form_widget(form.title, {'attr': {'class' : 'col-11'}}) }}
+            </div>
+            <div class="form-group col-12 col-md-6">
+                {{ form_label(form.author, null, {'label_attr': {'class': 'col-12 col-sm-12'}}) }}
+                {{ form_widget(form.author, {'attr': {'class' : 'col-11'}}) }}
+            </div>
+        </div>
+
+        <!-- DESCRIPTION & GENRE-->
+        <div class="form-row">
+            <div class="form-group col-12 col-md-6">
+                {{ form_label(form.description, null, {'label_attr': {'class': 'col-12 col-sm-12'}}) }}
+                {{ form_widget(form.description, {'attr': {'class' : 'col-11'}}) }}
+            </div>
+            <div class="form-group col-12 col-md-6">
+                {{ form_label(form.genre, null, {'label_attr': {'class': 'col-12 col-sm-12'}}) }}
+                {{ form_widget(form.genre, {'attr': {'class' : 'col-11'}}) }}
+            </div>
+        </div>
+
+        <!-- PRICE & STOCK -->
+        <div class="form-row">
+            <div class="form-group col-12 col-md-5" style="margin-right:72px;">
+                {{ form_label(form.price, null, {'label_attr': {'class': 'col-12 col-sm-12'}}) }}
+                {{ form_widget(form.price, {'attr': {'class' : 'col-11'}}) }}
+            </div>
+            <div class="form-group col-12 col-md-6">
+                {{ form_label(form.stock, null, {'label_attr': {'class': 'col-12 col-sm-12'}}) }}
+                {{ form_widget(form.stock, {'attr': {'class' : 'col-11'}}) }}
+            </div>
+        </div>
+
+        <!-- PUBLISHER & RELEASE_DATE -->
+        <div class="form-row">
+            <div class="form-group col-12 col-md-6">
+                {{ form_label(form.publisher, null, {'label_attr': {'class': 'col-12 col-sm-12'}}) }}
+                {{ form_widget(form.publisher, {'attr': {'class' : 'col-11'}}) }}
+            </div>
+            <div class="form-group col-12 col-md-6">
+                {{ form_label(form.release_date, null, {'label_attr': {'class': 'col-12 col-sm-12'}}) }}
+                {{ form_widget(form.release_date, {'attr': {'class' : 'col-11'}}) }}
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-12 col-md-6">
+                {{ form_label(form.image, null, {'label_attr': {'class': 'col-12 col-sm-12'}}) }}
+                {{ form_widget(form.image, {'attr': {'class' : 'col-11 col-sm-11 img-name'}}) }}
+            </div>
+        </div>
+
+        {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary mt-3 mx-auto d-block border-radius-3'}}) }}
+
+
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script>
+        document.querySelector('.img-name').addEventListener('change',function(e){
+            var fileName = document.getElementById("edit_comic_image").files[0].name;
+            var nextSibling = e.target.nextElementSibling;
+            nextSibling.innerText = fileName;
+        })
+    </script>
+{% endblock %}

@@ -18,10 +18,14 @@
             <p><b>Publicado por:</b> {{ comic.publisher }}</p>
             <p><b>Autor: </b>{{ comic.author }}</p>
             <p><b>Precio: </b>{{ comic.price }}€</p>
-            <div class="d-inline-block w-100 mt-4">
-                <a class="btn btn-warning" href="#" style="width: 49%">Comprar ahora</a>
-                <a class="btn btn-secondary" href="#" style="width: 49%">Añadir al carrito</a>
-            </div>
+            <form class="mt-2" method="post">
+                Cantidad: <input type="number" value="1" name="amount">
+                <input type="hidden" name="comicId" value="{{ comic.id }}">
+                <div class="d-inline-block w-100 mt-4">
+                    <button class="btn btn-warning" style="width: 49%" formaction="#">Comprar ahora</button>
+                    <button class="btn btn-secondary" style="width: 49%" formaction="{{ path('addToShoppingCart') }}">Añadir al carrito</button>
+                </div>
+            </form>
         </div>
     </div>
 {% endblock %}

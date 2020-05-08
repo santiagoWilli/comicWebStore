@@ -31,5 +31,6 @@ class ShoppingCartController extends AbstractController
         return $this->render('public/shoppingCart.html.twig', [
             'comics' => $comics,
         ]);
+
     }
 }

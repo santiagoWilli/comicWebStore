@@ -44,7 +44,14 @@ class ShoppingCartController extends AbstractController
         $amount = $request->request->get("amount");
         $userId = $this->getUser()->getId();
 
-        $shoppingCartAccess->addToShoppingCart($userId, $comicId, $amount);
+        $item = $shoppingCartAccess->getItemWithIdFromUserWithId($comicId, $userId);
+
+        if (!empty($item)) {
+            $amount += $item["amount"];
+            $shoppingCartAccess->updateShoppingCart($userId, $comicId, $amount);
+        } else {
+            $shoppingCartAccess->addToShoppingCart($userId, $comicId, $amount);
+        }
 
         return $this->redirectToRoute('listShoppingCart');
     }

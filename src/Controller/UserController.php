@@ -119,4 +119,36 @@ class UserController extends AbstractController
     }
 
 
+
+    /**
+     * @Route("/admin/users/edit/{id}", name="editProfile")
+     * @return Response
+     */
+    public function editProfile($id, UserDataAccess $dataAccess, Request $request) {
+
+        $user_array= $dataAccess->getUserById($id);
+        $user = new User($user_array["name"], $user_array["last_name"], $user_array["role"],
+            $user_array["password"], $user_array["email"], $user_array["birth_date"]);
+
+        $form = $this->createForm(CreateUserType::class, $user);
+
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()) {
+            $success = $dataAccess->editProfile($form->getData(), $id);
+
+            if($success) {
+                $this->addFlash('success', "¡Modificado!");
+                return $this->redirectToRoute('viewProfile');
+            } else {
+                $this->addFlash('warning', "Error al modificar el usuario");
+            }
+        }
+
+        return $this->render('public/userProfile.html.twig', [
+            'form' => $form->createView(),
+        ]);
+
+    }
+
+
 }

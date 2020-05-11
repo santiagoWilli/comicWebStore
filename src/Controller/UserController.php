@@ -105,4 +105,17 @@ class UserController extends AbstractController
 
     }
 
+    /**
+     * @Route("/public/users/profile", name="viewProfile")
+     * @return Response
+     */
+    public function viewProfile(){
+        $user = $this->getUser();
+        $image = base64_encode($user->getProfilePicture());
+        return $this->render('public/userProfile.html.twig', [
+            'user' => $user,
+            'image' => $image,
+        ]);
+    }
+
 }

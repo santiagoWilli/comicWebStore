@@ -10,7 +10,7 @@
         </div>
         <div class="col-6 mt-4">
             {% for comic in (comic.genre|split(';')) %}
-            <span class="badge badge-warning float-right ml-1">{{ comic }}</span>
+                <span class="badge badge-warning float-right ml-1">{{ comic }}</span>
             {% endfor %}
             <br>
             <h2 class="text-center text-warning my-4">{{ comic.title }}</h2>
@@ -29,4 +29,6 @@
         </div>
     </div>
 {% endblock %}
+
+
 

@@ -56,3 +56,4 @@ class ShoppingCartController extends AbstractController
         return $this->redirectToRoute('listShoppingCart');
     }
 }
+

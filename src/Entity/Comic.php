@@ -231,5 +231,4 @@ class Comic
         $this->image = $image;
     }
 
-
 }

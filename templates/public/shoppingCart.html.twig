@@ -11,7 +11,7 @@
                 <th>Precio</th>
                 <th>Cantidad</th>
                 <th>Total</th>
-                <th>Acciones</th>
+                {#<th>Acciones</th>#}
             </tr>
             </thead>
             <tbody>
@@ -22,14 +22,14 @@
                     <td>{{ item.amount }}</td>
                     <td>{{ item.amount * item.comic.price }} €</td>
 
-                    <td>
+                    {#<td>
                         <a class="btn btn-sm btn-primary" href="">
                             <i class="fas fa-edit"></i>
                         </a>
                         <button class="btn btn-sm btn-danger deleteUser" onclick="">
                             <i class="far fa-trash-alt"></i>
                         </button>
-                    </td>
+                    </td> #}
                 </tr>
             {% endfor %}
             </tbody>

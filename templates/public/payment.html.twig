@@ -1,0 +1,64 @@
+{% extends '/public/base.html.twig' %}
+
+{% block title %}Confirmar pago{% endblock %}
+
+{% block body %}
+
+    <div class="col-md-8 mx-auto">
+        {{ form_start(form) }}
+
+        <!-- CARD TYPE -->
+        <div class="form-row">
+            <div class="form-group col-12 col-md-6">
+                {{ form_label(form.cardType, null, {'label_attr': {'class': 'col-12 col-sm-12'}}) }}
+                {{ form_widget(form.cardType, {'attr': {'class' : 'col-12'}}) }}
+            </div>
+        </div>
+
+        <!-- CARD NUMBER -->
+        <div class="form-row">
+            <div class="form-group col-12 col-md-6">
+                {{ form_label(form.cardNumber, null, {'label_attr': {'class': 'col-12 col-sm-12'}}) }}
+                {{ form_widget(form.cardNumber, {'attr': {'class' : 'col-12'}}) }}
+                <div class="form-error">
+                    {{ form_errors(form.cardNumber) }}
+                </div>
+            </div>
+        </div>
+
+        <!-- CARDHOLDER -->
+        <div class="form-row">
+            <div class="form-group col-12 col-md-6">
+                {{ form_label(form.cardholderName, null, {'label_attr': {'class': 'col-12 col-sm-12'}}) }}
+                {{ form_widget(form.cardholderName, {'attr': {'class' : 'col-11'}}) }}
+                <div class="form-error">
+                    {{ form_errors(form.cardholderName) }}
+                </div>
+            </div>
+        </div>
+
+        <!-- EXPIRATION DATE & CSV -->
+        <div class="form-row">
+            <div class="form-group col-12 col-md-6">
+                {{ form_label(form.expirationDate, null, {'label_attr': {'class': 'col-12 col-sm-12'}}) }}
+                {{ form_widget(form.expirationDate, {'attr': {'class' : 'col-11'}}) }}
+                <div class="form-error">
+                    {{ form_errors(form.expirationDate) }}
+                </div>
+            </div>
+            <div class="form-group col-12 col-md-6">
+                {{ form_label(form.csv, null, {'label_attr': {'class': 'col-12 col-sm-12'}}) }}
+                {{ form_widget(form.csv, {'attr': {'class' : 'col-11'}}) }}
+                <div class="form-error">
+                    {{ form_errors(form.csv) }}
+                </div>
+            </div>
+        </div>
+
+        {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary mt-3 mx-auto d-block border-radius-3'}}) }}
+
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+

@@ -7,7 +7,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class Payment
 {
-
     /**
      * @Assert\NotBlank
      * @Assert\Length(max=19)

@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Forms\Type\CreateUserType;
+use App\Forms\Type\EditProfileType;
 use App\Service\UserDataAccess;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -89,7 +90,7 @@ class UserController extends AbstractController
 
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
-            $success = $dataAccess->editUser($form->getData(), $id);
+            $success = $dataAccess->editUser($form->getData());
 
             if($success) {
                 $this->addFlash('success', "¡Modificado!");
@@ -106,7 +107,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/public/users/profile", name="viewProfile")
+     * @Route("/profile", name="viewProfile")
      * @return Response
      */
     public function viewProfile(){
@@ -120,20 +121,18 @@ class UserController extends AbstractController
 
 
     /**
-     * @Route("/admin/users/edit/{id}", name="editProfile")
+     * @Route("/profile/edit", name="editProfile")
      * @return Response
      */
-    public function editProfile($id, UserDataAccess $dataAccess, Request $request) {
+    public function editProfile(UserDataAccess $dataAccess, Request $request) {
 
-        $user_array= $dataAccess->getUserById($id);
-        $user = new User($user_array["name"], $user_array["last_name"], $user_array["role"],
-            $user_array["password"], $user_array["email"], $user_array["birth_date"]);
+        $user = $this->getUser();
 
-        $form = $this->createForm(CreateUserType::class, $user);
+        $form = $this->createForm(EditProfileType::class, $user);
 
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
-            $success = $dataAccess->editProfile($form->getData(), $id);
+            $success = $dataAccess->editUser($form->getData());
 
             if($success) {
                 $this->addFlash('success', "¡Modificado!");
@@ -143,7 +142,7 @@ class UserController extends AbstractController
             }
         }
 
-        return $this->render('public/editUserForm.html.twig', [
+        return $this->render('public/editProfile.html.twig', [
             'form' => $form->createView(),
         ]);
 

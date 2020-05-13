@@ -16,7 +16,7 @@ class PurchaseController extends AbstractController {
      * @Route("/payment", name="payment")
      * @return Response
      */
-    public function payment(PurchasesDataAccess $dataAccess, Request $request) {
+    /**public function payment(PurchasesDataAccess $dataAccess, Request $request) {
         $form = $this->createForm(PaymentType::class, new Payment());
         $price = $request->request->get("price") * $request->request->get("amount");
 
@@ -36,6 +36,6 @@ class PurchaseController extends AbstractController {
             'form' => $form->createView(),
             'price' => $price,
         ]);
-    }
+    }*/
 
 }

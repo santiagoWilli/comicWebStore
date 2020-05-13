@@ -119,7 +119,6 @@ class UserController extends AbstractController
     }
 
 
-
     /**
      * @Route("/admin/users/edit/{id}", name="editProfile")
      * @return Response
@@ -144,7 +143,7 @@ class UserController extends AbstractController
             }
         }
 
-        return $this->render('public/userProfile.html.twig', [
+        return $this->render('public/editUserForm.html.twig', [
             'form' => $form->createView(),
         ]);
 

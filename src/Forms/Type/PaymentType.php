@@ -3,13 +3,15 @@
 
 namespace App\Forms\Type;
 
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class PaymentType
+class PaymentType extends AbstractType
 {
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -37,8 +39,11 @@ class PaymentType
                 ),
             ])
             ->add('csv', NumberType::class, [
-                'label' => "Editorial",
+                'label' => "CSV",
                 'required' => false,
+            ])
+            ->add('save', SubmitType::class, [
+                'label' => "Pagar",
             ]);
     }
 }

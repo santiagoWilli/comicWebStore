@@ -37,4 +37,5 @@ class PurchaseController extends AbstractController {
             'price' => $price,
         ]);
     }
+
 }

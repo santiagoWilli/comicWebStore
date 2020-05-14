@@ -55,4 +55,5 @@ class PurchaseController extends AbstractController {
             'comicId' => $comic_id,
         ]);
     }
+
 }

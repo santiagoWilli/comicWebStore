@@ -33,19 +33,26 @@ class PurchasesDataAccess extends DataAccess
                                             VALUES (:id, :packageId, :date);", [
             "id" => $user_id,
             "packageId" => $package_id,
-            "date" => date("H:i:s"),
+            "date" => date("Y-m-d H:i:s"),
         ]);
     }
 
     private function addPurchasePackage($package_id, $comics)
     {
+        $success = true;
+        if (empty($comics)) {
+            $success = false;
+        }
         foreach ($comics as $comic) {
-            parent::executeSQL("INSERT INTO package (id, comic_id, amount) 
+            $success2 = parent::executeSQL("INSERT INTO package (id, comic_id, amount) 
                                             VALUES (:id, :comic_id, :amount);", [
                 "id" => $package_id,
                 "comic_id" => $comic["id"],
                 "amount" => $comic["amount"],
             ]);
+            $success = ($success and $success2);
         }
+        return $success;
     }
 }
+

@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Forms\Model\Payment;
 use App\Forms\Type\PaymentType;
+use App\Service\ComicDataAccess;
 use App\Service\PurchasesDataAccess;
+use phpDocumentor\Reflection\Types\Array_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,6 +38,40 @@ class PurchaseController extends AbstractController {
             'form' => $form->createView(),
             'price' => $price,
         ]);
+    }
+
+    /**
+     * @Route("/purchase_history", name="purchaseHistory")
+     * @return Response
+     */
+    public function purchaseHistory(PurchasesDataAccess $dataAccess, ComicDataAccess $comicDataAccess) {
+
+        $userPurchases = $dataAccess->getAllUserPurchases($this->getUser()->getId());
+        $purchases = [];
+        $i=0;
+        foreach ($userPurchases as $purchase){
+            $packages = $dataAccess->getPackage($purchase['package_id']);
+            $purchaseComics = [];
+            $j=0;
+            foreach ($packages as $package){
+                $purchaseComics[$j] = [
+                    'comic' => $comicDataAccess->getComicById($package['comic_id']),
+                    'amount' => $package['amount'],
+                ];
+                $j++;
+            }
+            $purchases[$i] = [
+                'comics' => $purchaseComics,
+                'id' => $purchase['package_id'],
+                'date' => $purchase['date']
+            ];
+            $i++;
+        }
+
+        return $this->render('public/purchaseHistory.html.twig', [
+            'purchases' => $purchases,
+        ]);
+
     }
 
 }

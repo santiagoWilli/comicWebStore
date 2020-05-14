@@ -16,15 +16,20 @@
 
                 <h3 class= "my-2 mb-5">{{ user.name }} {{ user.lastName }}</h3>
             </div>
-            <div class="mx-3 row">
-
+            <div class="mx-3 row mb-3">
                 <div class="col-6 text-center">
                     <p><b>Fecha de nacimiento: </b>{{ user.birthDate | date("d/m/Y") }}</p>
                 </div>
                 <div class="col-6 text-center">
                     <p><b>Email: </b>{{ user.email }}</p>
                 </div>
-
+            </div>
+            <div class="mx-3 row">
+                <div class="col">
+                    <div class="text-center">
+                        <a class='btn btn-primary mr-1 ml-auto' href='{{ path('purchaseHistory') }}'>Ver historial de compra</a>
+                    </div>
+                </div>
             </div>
 
 

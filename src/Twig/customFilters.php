@@ -15,6 +15,7 @@ class customFilters extends AbstractExtension {
     public function getFilters() {
         return array(
             new TwigFilter('role', [$this, 'getUserRole']),
+            new TwigFilter('serialize', [$this, 'serialize']),
         );
     }
 
@@ -26,18 +27,9 @@ class customFilters extends AbstractExtension {
 
         return $ROLES[$input];
     }
-    
-    private function presetCarousels()
-    {
-        return [
-            "Novedades",
-            "Portada",
-            "Recomendaciones",
-            "Proximamente",
-            "Aleatorio",
-            "Categorias",
-            "Mejores",
-        ];
+
+    public function serialize($input) {
+        return base64_encode(serialize($input));
     }
 
 }

@@ -8,7 +8,7 @@
         {{ form_start(form) }}
 
         <input type="hidden" value="{{ amount }}" name="amount">
-        <input type="hidden" name="comicId" value="{{ comicId }}">
+        <input type="hidden" name="comicId" value="{{ comicId | serialize }}">
 
         <!-- CARD TYPE -->
         <div class="form-row">

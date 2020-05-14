@@ -37,6 +37,10 @@ class EditProfileType extends AbstractType
                     'year' => 'Año', 'month' => 'Mes', 'day' => 'Dia',
                 ]
             ])
+            ->add('profilePicture', FileType::class, [
+                'label' => "Foto de perfil",
+                'required' => false,
+            ])
             ->add('save', SubmitType::class, [
                 'label' => "Guardar",
             ]);

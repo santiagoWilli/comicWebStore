@@ -6,6 +6,7 @@ use App\Forms\Model\Payment;
 use App\Forms\Type\PaymentType;
 use App\Service\ComicDataAccess;
 use App\Service\PurchasesDataAccess;
+use App\Service\ShoppingCartAccess;
 use phpDocumentor\Reflection\Types\Array_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -24,20 +25,23 @@ class PurchaseController extends AbstractController {
         $form = $this->createForm(PaymentType::class, new Payment());
 
         $comic_price = $request->request->get("price");
-        $amount = $request->request->get("amount");
-        $comic_id = $request->request->get("comicId");
         $user_id = $this->getUser()->getId();
-
-        $comics[0] = [
-            'id' => $comic_id,
-            'amount' => $amount,
-        ];
-
-        $clave = $comic_id . $user_id . random_int(0, PHP_INT_MAX);
-        $package_id = password_hash($clave, PASSWORD_BCRYPT, ['cost' => 13]);
+        $amount = $request->request->get("amount");
+        $comics = [];
+        if ($request->request->get("firstStep") != null) {
+            $comic_id = $request->request->get("comicId");
+            $comics[0] = [
+                'id' => $comic_id,
+                'amount' => $amount,
+            ];
+        }
 
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
+            $comics = unserialize(base64_decode($request->request->get("comicId")));
+            dump($comics);
+            $clave = $comics[0]["id"] . $user_id . random_int(0, PHP_INT_MAX);
+            $package_id = password_hash($clave, PASSWORD_BCRYPT, ['cost' => 13]);
             $success = $dataAccess->registerUserPurchase($user_id, $package_id, $comics);
             if($success) {
                 $this->addFlash('success', "¡Compra realizada con éxito!");
@@ -51,16 +55,58 @@ class PurchaseController extends AbstractController {
             'form' => $form->createView(),
             'price' => $comic_price * $amount,
             'amount' => $amount,
-            'comicId' => $comic_id,
+            'comicId' => $comics,
         ]);
     }
+
+
+    /**
+     * @Route("/cartpayment/all", name="cartPaymentAll")
+     * @return Response
+     * @throws \Exception
+     */
+    public function shoppingCartPaymentAll(PurchasesDataAccess $purchasesDataAccess, ShoppingCartAccess $shoppingCartAccess, Request $request) {
+        $form = $this->createForm(PaymentType::class, new Payment());
+
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()) {
+            $cartItems = $shoppingCartAccess->getItemsFromUserWithId($this->getUser()->getId());
+            $comics = [];
+            $i = 0;
+            foreach ($cartItems as $item) {
+                $comics[$i++] = [
+                    "id" => $item["comic_id"],
+                    "amount" => $item["amount"],
+                ];
+            }
+
+            $clave = $comics[0]["id"] . $this->getUser()->getId() . random_int(0, PHP_INT_MAX);
+            $package_id = password_hash($clave, PASSWORD_BCRYPT, ['cost' => 13]);
+            $success = $purchasesDataAccess->registerUserPurchase($this->getUser()->getId(), $package_id, $comics);
+            if($success) {
+                $this->addFlash('success', "¡Compra realizada con éxito!");
+                $shoppingCartAccess->clearShoppingCart($this->getUser()->getId());
+                return $this->redirectToRoute('index');
+            } else {
+                $this->addFlash('warning', "Ha ocurrido un error");
+            }
+        }
+
+        return $this->render('public/payment.html.twig', [
+            'form' => $form->createView(),
+            'price' => "",
+            'amount' => "",
+            'comicId' => "",
+        ]);
+    }
+
 
     /**
      * @Route("/cartpayment", name="cartPayment")
      * @return Response
      * @throws \Exception
      */
-    public function shoppingCartPayment(PurchasesDataAccess $dataAccess, Request $request) {
+    public function shoppingCartPayment(PurchasesDataAccess $dataAccess, ShoppingCartAccess $shoppingCartAccess, Request $request) {
         $form = $this->createForm(PaymentType::class, new Payment());
 
         if ($request->request->get("firstStep") != null) {
@@ -69,7 +115,6 @@ class PurchaseController extends AbstractController {
             $comics_index = 0;
             while(true) {
                 if (($checkbox = $request->request->get("checkbox-" . $i)) == null) break;
-                dump($request);
                 if ($checkbox === "on") {
                     $comic_id = $request->request->get("comic-" . $i);
                     $amount = $request->request->get("amount-" . $i);
@@ -80,16 +125,21 @@ class PurchaseController extends AbstractController {
                 }
                 $i++;
             }
+            dump($comics);
         }
 
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
             $comics = unserialize(base64_decode($request->request->get("comicId")));
+            dump($comics);
             $clave = $comics[0]["id"] . $this->getUser()->getId() . random_int(0, PHP_INT_MAX);
             $package_id = password_hash($clave, PASSWORD_BCRYPT, ['cost' => 13]);
             $success = $dataAccess->registerUserPurchase($this->getUser()->getId(), $package_id, $comics);
             if($success) {
                 $this->addFlash('success', "¡Compra realizada con éxito!");
+                foreach ($comics as $comic) {
+                    $shoppingCartAccess->deleteItemFromShoppingCart($this->getUser()->getId(), $comic["id"]);
+                }
                 return $this->redirectToRoute('index');
             } else {
                 $this->addFlash('warning', "Ha ocurrido un error");
@@ -103,6 +153,7 @@ class PurchaseController extends AbstractController {
             'comicId' => $comics,
         ]);
     }
+
 
     /**
      * @Route("/purchase_history", name="purchaseHistory")
@@ -125,6 +176,7 @@ class PurchaseController extends AbstractController {
         ]);
 
     }
+
 
     /**
      * @Route("/purchase_history/package", methods={"POST"}, name="getPackage")

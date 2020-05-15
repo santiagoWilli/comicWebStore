@@ -113,9 +113,10 @@ class PurchaseController extends AbstractController {
             $comics = [];
             $i = 0;
             $comics_index = 0;
-            while(true) {
-                if (($checkbox = $request->request->get("checkbox-" . $i)) == null) break;
-                if ($checkbox === "on") {
+            $cartSize = sizeof($shoppingCartAccess->getItemsFromUserWithId($this->getUser()->getId()));
+            for($i = 0; $i < $cartSize; $i++) {
+                dump("checkbox-" . $i);
+                if ($request->request->get("checkbox-" . $i) === "on") {
                     $comic_id = $request->request->get("comic-" . $i);
                     $amount = $request->request->get("amount-" . $i);
                     $comics[$comics_index++] = [
@@ -123,7 +124,6 @@ class PurchaseController extends AbstractController {
                         'amount' => $amount,
                     ];
                 }
-                $i++;
             }
             dump($comics);
         }

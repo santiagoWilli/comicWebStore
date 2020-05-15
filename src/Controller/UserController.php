@@ -127,6 +127,7 @@ class UserController extends AbstractController
     public function editProfile(UserDataAccess $dataAccess, Request $request) {
 
         $user = $this->getUser();
+        $user->setProfilePicture(null);
 
         $form = $this->createForm(EditProfileType::class, $user);
 

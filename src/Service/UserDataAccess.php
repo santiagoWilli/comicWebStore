@@ -36,7 +36,7 @@ class UserDataAccess extends DataAccess
         );
     }
 
-    public function editUser(User $user, $id) {
+    public function editUser(User $user) {
         $params = [
             "name" => $user->getName(),
             "lastName" => $user->getLastName(),
@@ -44,7 +44,7 @@ class UserDataAccess extends DataAccess
             "password" => $user->getPassword(),
             "birthDate" => $user->getBirthDate()->format('Y/m/d'),
             "email" => $user->getEmail(),
-            "id" => $id,
+            "id" => $user->getId(),
         ];
 
         if(is_null($user->getProfilePicture())){

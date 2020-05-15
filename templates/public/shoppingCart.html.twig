@@ -4,36 +4,48 @@
     {% include 'public/navbar.html.twig' %}
 
     <div class="shoppingcart m-2 px-2 py-3">
-        <table id="table_dataTable" class="table table-bordered" style="width: 100%">
-            <thead>
-            <tr class="table-primary">
-                <th>Nombre</th>
-                <th>Precio</th>
-                <th>Cantidad</th>
-                <th>Total</th>
-                {#<th>Acciones</th>#}
-            </tr>
-            </thead>
-            <tbody>
-            {% for key, item in comics %}
-                <tr>
-                    <td><a href="{{ path('comicInfo', {'id': item.comic.id}) }}">{{ item.comic.title }}</a></td>
-                    <td>{{ item.comic.price }} €</td>
-                    <td>{{ item.amount }}</td>
-                    <td>{{ item.amount * item.comic.price }} €</td>
-
-                    {#<td>
-                        <a class="btn btn-sm btn-primary" href="">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        <button class="btn btn-sm btn-danger deleteUser" onclick="">
-                            <i class="far fa-trash-alt"></i>
-                        </button>
-                    </td> #}
+        <form method="post">
+            <table id="table_dataTable" class="table table-bordered" style="width: 100%">
+                <thead>
+                <tr class="table-primary">
+                    <th style="width: 20px !important;"></th>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Total</th>
+                    {#<th>Acciones</th>#}
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                {% for key, item in comics %}
+                    <tr>
+                        <td><input type="hidden" name="comic-{{ key }}" value="{{ item.comic.id }}">
+                            <input type="hidden" name="firstStep" value="pf">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" name="checkbox-{{ key }}" id="checkbox{{ key }}">
+                                <label class="custom-control-label" for="checkbox{{ key }}"></label></div></td>
+                        <td><a href="{{ path('comicInfo', {'id': item.comic.id}) }}">{{ item.comic.title }}</a></td>
+                        <td>{{ item.comic.price }} €</td>
+                        <td>{{ item.amount }} <input type="hidden" name="amount-{{ key }}" value="{{ item.amount }}"></td>
+                        <td>{{ item.amount * item.comic.price }} €</td>
+
+                        {#<td>
+                            <a class="btn btn-sm btn-primary" href="">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <button class="btn btn-sm btn-danger deleteUser" onclick="">
+                                <i class="far fa-trash-alt"></i>
+                            </button>
+                        </td> #}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <div class="text-center">
+                <button class='btn btn-primary mr-1 ml-auto' formaction='{{ path('cartPayment') }}'>Comprar seleccionados</button>
+                <button class='btn btn-primary mr-1 ml-auto' formaction='{{ path('cartPayment') }}'>Comprar carrito</button>
+            </div>
+        </form>
     </div>
 {% endblock %}
 

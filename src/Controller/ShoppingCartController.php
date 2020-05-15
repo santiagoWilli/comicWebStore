@@ -22,15 +22,19 @@ class ShoppingCartController extends AbstractController
 
         $comics = [];
         $i = 0;
+        $total = 0;
         foreach($items as $item) {
+            $comic = $comicDataAccess->getComicById($item['comic_id']);
             $comics[$i] = [
-                'comic' => $comicDataAccess->getComicById($item['comic_id']),
+                'comic' => $comic,
                 'amount'=> $item['amount']
             ];
+            $total += $comic['price'] * $item['amount'];
             $i++;
         }
         return $this->render('public/shoppingCart.html.twig', [
             'comics' => $comics,
+            'total' => $total,
         ]);
 
     }

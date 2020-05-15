@@ -77,9 +77,6 @@ class PurchaseController extends AbstractController {
                 }
                 $i++;
             }
-
-            $user_id = $this->getUser()->getId();
-
         }
 
         $form->handleRequest($request);

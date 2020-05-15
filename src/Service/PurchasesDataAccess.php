@@ -8,6 +8,7 @@ class PurchasesDataAccess extends DataAccess
 {
     public function getAllUserPurchases($id)
     {
+
         return parent::executeSQL("SELECT * FROM purchases WHERE user_id = :id ORDER BY date;", [
             "id" => $id,
         ])->fetchAll();

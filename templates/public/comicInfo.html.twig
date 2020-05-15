@@ -23,6 +23,7 @@
                 Cantidad: <input type="number" value="1" name="amount">
                 <input type="hidden" name="comicId" value="{{ comic.id }}">
                 <input type="hidden" name="price" value="{{ comic.price }}">
+                <input type="hidden" name="firstStep" value="pf">
                 <div class="d-inline-block w-100 mt-4">
                     <button class="btn btn-warning" style="width: 49%" formaction="{{ path('payment') }}">Comprar ahora</button>
                     <button class="btn btn-secondary" style="width: 49%" formaction="{{ path('addToShoppingCart') }}">Añadir al carrito</button>

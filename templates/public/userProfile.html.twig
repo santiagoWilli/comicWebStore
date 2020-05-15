@@ -7,7 +7,7 @@
     <div class="col-auto mt-4 mx-auto px-5 w-50">
         <div class="card" style="background-color: #000; border-color: #ffffb3; min-height: 70vh">
             <div>
-                <a href="{{ path('editProfile', {'id': user.id}) }}" class="btn btn-sm btn-primary float-right my-1 mx-1">
+                <a href="{{ path('editUser',{'id': 1})  }}" class="btn btn-sm btn-primary float-right my-1 mx-1">
                     <i class="fas fa-edit" style="color:white"></i>
                 </a>
             </div>
@@ -16,17 +16,21 @@
 
                 <h3 class= "my-2 mb-5">{{ user.name }} {{ user.lastName }}</h3>
             </div>
-            <div class="mx-3 row">
-
+            <div class="mx-3 row mb-3">
                 <div class="col-6 text-center">
                     <p><b>Fecha de nacimiento: </b>{{ user.birthDate | date("d/m/Y") }}</p>
                 </div>
                 <div class="col-6 text-center">
                     <p><b>Email: </b>{{ user.email }}</p>
                 </div>
-
             </div>
-
+            <div class="mx-3 row">
+                <div class="col">
+                    <div class="text-center">
+                        <a class='btn btn-primary mr-1 ml-auto' href='{{ path('purchaseHistory') }}'>Ver historial de compra</a>
+                    </div>
+                </div>
+            </div>
 
         </div>
     </div>

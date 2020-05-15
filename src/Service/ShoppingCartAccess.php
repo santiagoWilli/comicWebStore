@@ -38,4 +38,17 @@ class ShoppingCartAccess extends DataAccess
             "user_id" => $userId,
         ])->fetch();
     }
+
+    public function deleteItemFromShoppingCart($user_id, $comic_id) {
+        return parent::executeSQL("DELETE FROM shopping_cart WHERE comic_id = :comicId AND user_id = :userId;", [
+            "comicId" => $comic_id,
+            "userId" => $user_id,
+        ]);
+    }
+
+    public function clearShoppingCart($user_id) {
+        return parent::executeSQL("DELETE FROM shopping_cart WHERE user_id = :userId;", [
+            "userId" => $user_id,
+        ]);
+    }
 }

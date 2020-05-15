@@ -1,0 +1,63 @@
+{% extends 'public/base.html.twig' %}
+
+{% block body %}
+    {% include 'public/navbar.html.twig' %}
+
+    <div class="shoppingcart m-2 px-2 py-3">
+        <table id="table_dataTable" class="table table-bordered" style="width: 100%">
+            <thead>
+            <tr class="table-primary">
+                <th>Fecha</th>
+                <th>Id compra</th>
+                <th>Resumen</th>
+            </tr>
+            </thead>
+            <tbody>
+            {%  for purchase in purchases %}
+                <tr>
+                    <td>{{ purchase.date }}</td>
+                    <td>{{ purchase.id }}</td>
+                    <td>
+                        <p class="text-center">
+                            <button type="button" class="btn btn-primary resume-table" id-package="{{ purchase.id }}">Ver</button>
+                        </p>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready( function () {
+            $('#table_dataTable').DataTable({
+            });
+        });
+    </script>
+    <script>
+        $('.resume-table').click(function () {
+            let id_package = $(this).attr('id-package');
+
+            $.ajax({
+                url: "{{ path('getPackage') }}",
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    "id-package": id_package,
+                },
+                async: true,
+                success: function (data) {
+                    let table = JSON.parse(data).content;
+                    bootbox.dialog({
+                        title: "<p class='text-dark'>"+id_package+"</p>",
+                        message: table,
+                        backdrop: true,
+                        onEscape: true,
+                    });
+                }
+            })
+        });
+    </script>
+{% endblock %}

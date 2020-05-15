@@ -42,10 +42,12 @@
                 {% endfor %}
                 </tbody>
             </table>
-            <div class="text-center">
-                <button class='btn btn-primary mr-1 ml-auto' formaction='{{ path('cartPayment') }}'>Comprar seleccionados</button>
-                <button class='btn btn-primary mr-1 ml-auto' formaction='{{ path('cartPaymentAll') }}'>Comprar todo el carrito</button>
-            </div>
+            {% if comics is not empty %}
+                <div class="text-center">
+                    <button class='btn btn-primary mr-1 ml-auto' formaction='{{ path('cartPayment') }}'>Comprar seleccionados</button>
+                    <button class='btn btn-primary mr-1 ml-auto' formaction='{{ path('cartPaymentAll') }}'>Comprar todo el carrito</button>
+                </div>
+            {% endif %}
         </form>
     </div>
 {% endblock %}

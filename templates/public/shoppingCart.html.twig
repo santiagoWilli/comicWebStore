@@ -4,6 +4,7 @@
     {% include 'public/navbar.html.twig' %}
 
     <div class="shoppingcart m-2 px-2 py-3">
+        <h2>Total del carrito: {{ total }}€</h2>
         <form method="post">
             <table id="table_dataTable" class="table table-bordered" style="width: 100%">
                 <thead>
@@ -41,10 +42,12 @@
                 {% endfor %}
                 </tbody>
             </table>
-            <div class="text-center">
-                <button class='btn btn-primary mr-1 ml-auto' formaction='{{ path('cartPayment') }}'>Comprar seleccionados</button>
-                <button class='btn btn-primary mr-1 ml-auto' formaction='{{ path('cartPaymentAll') }}'>Comprar todo el carrito</button>
-            </div>
+            {% if comics is not empty %}
+                <div class="text-center">
+                    <button class='btn btn-primary mr-1 ml-auto' formaction='{{ path('cartPayment') }}'>Comprar seleccionados</button>
+                    <button class='btn btn-primary mr-1 ml-auto' formaction='{{ path('cartPaymentAll') }}'>Comprar todo el carrito</button>
+                </div>
+            {% endif %}
         </form>
     </div>
 {% endblock %}

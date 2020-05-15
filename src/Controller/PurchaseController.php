@@ -8,6 +8,7 @@ use App\Service\ComicDataAccess;
 use App\Service\PurchasesDataAccess;
 use phpDocumentor\Reflection\Types\Array_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -108,23 +109,11 @@ class PurchaseController extends AbstractController {
      * @return Response
      */
     public function purchaseHistory(PurchasesDataAccess $dataAccess, ComicDataAccess $comicDataAccess) {
-
         $userPurchases = $dataAccess->getAllUserPurchases($this->getUser()->getId());
         $purchases = [];
         $i=0;
         foreach ($userPurchases as $purchase){
-            $packages = $dataAccess->getPackage($purchase['package_id']);
-            $purchaseComics = [];
-            $j=0;
-            foreach ($packages as $package){
-                $purchaseComics[$j] = [
-                    'comic' => $comicDataAccess->getComicById($package['comic_id']),
-                    'amount' => $package['amount'],
-                ];
-                $j++;
-            }
             $purchases[$i] = [
-                'comics' => $purchaseComics,
                 'id' => $purchase['package_id'],
                 'date' => $purchase['date']
             ];
@@ -137,6 +126,27 @@ class PurchaseController extends AbstractController {
 
     }
 
-
+    /**
+     * @Route("/purchase_history/package", methods={"POST"}, name="getPackage")
+     * @return Response
+     */
+    public function getPackageComics(PurchasesDataAccess $dataAccess, ComicDataAccess $comicDataAccess, Request $request){
+        $package = $dataAccess->getPackage($request->request->get('id-package'));
+        $comics = [];
+        $j=0;
+        foreach ($package as $comic){
+            $comics[$j] = [
+                'comic' => $comicDataAccess->getComicById($comic['comic_id']),
+                'amount' => $comic['amount'],
+            ];
+            $j++;
+        }
+        $data = [
+            'content' => $this->renderView('public/packageTable.html.twig', [
+                'comics' => $comics,
+            ]),
+        ];
+        return new JsonResponse(json_encode($data));
+    }
 
 }

@@ -1,0 +1,18 @@
+<table class="table">
+    <thead>
+    <tr>
+        <th>Título</th>
+        <th>Cantidad</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    {% for comic in comics %}
+        <tr>
+            <td>{{ comic.comic.title }}</td>
+            <td>{{ comic.amount }}</td>
+        </tr>
+    {%  endfor %}
+
+    </tbody>
+</table>

@@ -4,7 +4,6 @@
     {% include 'public/navbar.html.twig' %}
 
     <div class="shoppingcart m-2 px-2 py-3">
-        <p>{{ dump(purchases) }}</p>
         <table id="table_dataTable" class="table table-bordered" style="width: 100%">
             <thead>
             <tr class="table-primary">
@@ -14,11 +13,15 @@
             </tr>
             </thead>
             <tbody>
-            {%  for key, item in purchases %}
+            {%  for purchase in purchases %}
                 <tr>
-                    <td>{{ item.date }}</td>
-                    <td>{{ item.id }}</td>
-                    <td><p class="text-center"><button type="button" class="btn btn-primary resume-table">Ver</button></p></td>
+                    <td>{{ purchase.date }}</td>
+                    <td>{{ purchase.id }}</td>
+                    <td>
+                        <p class="text-center">
+                            <button type="button" class="btn btn-primary resume-table" id-package="{{ purchase.id }}">Ver</button>
+                        </p>
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>
@@ -34,12 +37,27 @@
         });
     </script>
     <script>
-        $(document).on("click",".resume-table", function(e){
-            bootbox.alert({
-                title: {{ item.id }},
-                backdrop:true,
-                message:"",
+        $('.resume-table').click(function () {
+            let id_package = $(this).attr('id-package');
+
+            $.ajax({
+                url: "{{ path('getPackage') }}",
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    "id-package": id_package,
+                },
+                async: true,
+                success: function (data) {
+                    let table = JSON.parse(data).content;
+                    bootbox.dialog({
+                        title: "<p class='text-dark'>"+id_package+"</p>",
+                        message: table,
+                        backdrop: true,
+                        onEscape: true,
+                    });
+                }
             })
-        } )
+        });
     </script>
 {% endblock %}

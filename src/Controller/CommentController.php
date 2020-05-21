@@ -39,6 +39,7 @@ class CommentController extends AbstractController
     }
 
 
+
     /**
      * @Route("/public/addcomment", name="addComment")
      * @param CommentsDataAccess $dataAccess

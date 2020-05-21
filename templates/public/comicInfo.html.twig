@@ -32,6 +32,19 @@
             {% endif %}
         </div>
     </div>
+    <div class="col-sm-10 col-sm-offset-1">
+        <ul class="media-list">
+            {% for key, comment in comments %}
+            <li class="media">
+                <img class="media-object img-circle" src="data:image/png;base64,{{ commentsUsers[key].profile_picture }}" style="border-radius:50%; width:125px; height: 125px">
+                <div class="media-body">
+                    <h4>{{ commentsUsers[key].name }}</h4>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        {{ dump(comments) }}
+    </div>
 {% endblock %}
 
 

@@ -8,6 +8,8 @@ use App\Entity\Comic;
 use App\Forms\Type\CreateComicType;
 use App\Forms\Type\EditComicType;
 use App\Service\ComicDataAccess;
+use App\Service\CommentsDataAccess;
+use App\Service\UserDataAccess;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -106,13 +108,33 @@ class ComicController extends AbstractController
      * @Route("/user/comicInfo/{id}", name="comicInfo")
      * @return Response
      */
-    public function showComicInfo($id, ComicDataAccess $dataAccess){
+    public function showComicInfo($id, ComicDataAccess $dataAccess, CommentsDataAccess $commentDataAccess, UserDataAccess $userDataAccess){
         $comic = $dataAccess->getComicById($id);
         $image = base64_encode($comic['image']);
+
+        $comments = $commentDataAccess->getAllComicComments($id);
+        $commentsUsers = array();
+
+        $currentUserId = $this->getUser()->getId();
+        $loggedUserComment = null;
+
+        foreach($comments as $key => $comment){
+            $userId = $comment['user_id'];
+            if ($userId == $currentUserId){
+                $loggedUserComment = $comment;
+                continue;
+            }
+            $user = $userDataAccess->getUserById($userId);
+            $user['profile_picture'] = base64_encode($user['profile_picture']);
+            $commentsUsers[$key] = $user;
+        }
 
         return $this->render('public/comicInfo.html.twig', [
             "comic" => $comic,
             "image" => $image,
+            "loggedUserComment" => $loggedUserComment,
+            "comments" => $comments,
+            "commentsUsers" => $commentsUsers,
         ]);
     }
 

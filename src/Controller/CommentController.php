@@ -40,11 +40,22 @@ class CommentController extends AbstractController
 
 
     /**
-     * @Route("/public/addcomment", name="addComment")
-     * @param CommentsDataAccess $dataAccess
+     * @Route("/public/addcomment", methods={"POST"}, name="addComment")
      * @return Response
      */
     public function addComment(CommentsDataAccess $dataAccess, Request $request){
+
+        $iduser = $this->getUser()->getId();
+        $idcomic = $request->request->get('id-comic');
+        $comment = $request->request->get('comment');
+        $success = $dataAccess->addComment($iduser, $idcomic, $comment);
+
+        if($success) {
+            $this->addFlash('success', "¡Creado!");
+            return $this->redirectToRoute('comicInfo');
+        } else {
+            $this->addFlash('warning', "Error al crear comentario");
+        }
 
     }
 

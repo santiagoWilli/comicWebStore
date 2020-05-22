@@ -14,7 +14,7 @@
                     <th>Precio</th>
                     <th>Cantidad</th>
                     <th>Total</th>
-                    {#<th>Acciones</th>#}
+                    <th>Acciones</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -29,15 +29,11 @@
                         <td>{{ item.comic.price }} €</td>
                         <td>{{ item.amount }} <input type="hidden" name="amount-{{ key }}" value="{{ item.amount }}"></td>
                         <td>{{ item.amount * item.comic.price }} €</td>
-
-                        {#<td>
-                            <a class="btn btn-sm btn-primary" href="">
-                                <i class="fas fa-edit"></i>
-                            </a>
-                            <button class="btn btn-sm btn-danger deleteUser" onclick="">
+                        <td>
+                            <button class="btn btn-sm btn-danger deleteCart" onclick="removeFromShoppingCart({{ userId }}, {{ item.comic.id }})">
                                 <i class="far fa-trash-alt"></i>
                             </button>
-                        </td> #}
+                        </td>
                     </tr>
                 {% endfor %}
                 </tbody>
@@ -53,6 +49,7 @@
 {% endblock %}
 
 {% block javascripts %}
+    <script src="{{ asset('assets/js/delete-comic-shoppingcart.js') }}"></script>
     <script>
         $(document).ready( function () {
             $('#table_dataTable').DataTable({

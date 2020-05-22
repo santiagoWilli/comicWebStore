@@ -7,6 +7,7 @@ namespace App\Controller;
 use App\Service\ComicDataAccess;
 use App\Service\ShoppingCartAccess;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,7 +20,8 @@ class ShoppingCartController extends AbstractController
      * @return Response
      */
     public function listShoppingCart(ShoppingCartAccess $shoppingCartAccess, ComicDataAccess $comicDataAccess) {
-        $items = $shoppingCartAccess->getItemsFromUserWithId($this->getUser()->getId());
+        $user_id = $this->getUser()->getId();
+        $items = $shoppingCartAccess->getItemsFromUserWithId($user_id);
 
         $comics = [];
         $i = 0;
@@ -36,6 +38,7 @@ class ShoppingCartController extends AbstractController
         return $this->render('public/shoppingCart.html.twig', [
             'comics' => $comics,
             'total' => $total,
+            'userId' => $user_id,
         ]);
 
     }
@@ -59,6 +62,19 @@ class ShoppingCartController extends AbstractController
         }
 
         return $this->redirectToRoute('listShoppingCart');
+    }
+
+    /**
+     * @Route("user/shoppingcart/remove", methods={"POST"}, name="removeFromShoppingCart")
+     * @return Response
+     */
+    public function removeFromShoppingCart(ShoppingCartAccess $shoppingCartAccess, Request $request) {
+        $success = false;
+        if($request->request->has("comicId")){
+            $success = $shoppingCartAccess->deleteItemFromShoppingCart($request->request->get("userId"),
+                                                                       $request->request->get("comicId"));
+        }
+        return new JsonResponse(json_encode($success));
     }
 }
 

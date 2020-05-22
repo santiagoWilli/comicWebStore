@@ -47,11 +47,14 @@
                             </form>
                         {% else %}
                             {# MODIFY COMMENT #}
-                            <textarea class="form-control" name="modifyComment">{{ loggedUserComment }}</textarea>
-                            <button class="btn btn-sm btn-danger deleteUser float-right" onclick="">
-                                <i class="far fa-trash-alt"></i>
-                            </button>
-                            <button class="btn-primary float-right mx-2">modificar</button>
+                            <form method="post">
+                                <textarea class="form-control" name="modifyComment">{{ loggedUserComment }}</textarea>
+                                <button class="btn btn-sm btn-danger deleteUser float-right" onclick="">
+                                    <i class="far fa-trash-alt"></i>
+                                </button>
+                                <input type="hidden" name="comicId" id="comicId" value="{{ comic.id }}">
+                                <button class="btn-primary float-right"formaction="{{ path('editComment') }}">Modificar</button>
+                            </form>
                         {% endif %}
                         </div>
                     {% endif %}

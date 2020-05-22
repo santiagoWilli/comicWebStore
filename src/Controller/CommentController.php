@@ -55,5 +55,19 @@ class CommentController extends AbstractController
             "id" => $idcomic]);
     }
 
+    /**
+     * @Route("/public/editcomment", methods={"POST"}, name="editComment")
+     * @return Response
+     */
+    public function editComment(CommentsDataAccess $dataAccess, Request $request){
+        $iduser = $this->getUser()->getId();
+        $idcomic = $request->request->get('comicId');
+        $comment = $request->request->get('modifyComment');
+        $dataAccess->editComment($iduser, $idcomic, $comment);
+
+        return $this->redirectToRoute('comicInfo',[
+            "id" => $idcomic]);
+    }
+
 
 }

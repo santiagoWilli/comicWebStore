@@ -13,6 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ShoppingCartController extends AbstractController
 {
+
     /**
      * @Route("/user/shoppingcart", name="listShoppingCart")
      * @return Response

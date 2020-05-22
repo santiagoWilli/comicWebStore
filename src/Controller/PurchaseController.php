@@ -39,7 +39,6 @@ class PurchaseController extends AbstractController {
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
             $comics = unserialize(base64_decode($request->request->get("comicId")));
-            dump($comics);
             $clave = $comics[0]["id"] . $user_id . random_int(0, PHP_INT_MAX);
             $package_id = password_hash($clave, PASSWORD_BCRYPT, ['cost' => 13]);
             $success = $dataAccess->registerUserPurchase($user_id, $package_id, $comics);
@@ -112,11 +111,9 @@ class PurchaseController extends AbstractController {
 
         if ($request->request->get("firstStep") != null) {
             $comics = [];
-            $i = 0;
             $comics_index = 0;
             $cartSize = sizeof($shoppingCartAccess->getItemsFromUserWithId($this->getUser()->getId()));
             for($i = 0; $i < $cartSize; $i++) {
-                dump("checkbox-" . $i);
                 if ($request->request->get("checkbox-" . $i) === "on") {
                     $comic_id = $request->request->get("comic-" . $i);
                     $amount = $request->request->get("amount-" . $i);
@@ -126,7 +123,6 @@ class PurchaseController extends AbstractController {
                     ];
                 }
             }
-            dump($comics);
         }
 
         $form->handleRequest($request);
@@ -149,7 +145,7 @@ class PurchaseController extends AbstractController {
 
         return $this->render('public/payment.html.twig', [
             'form' => $form->createView(),
-            'price' => 38,
+            'price' => "",
             'amount' => "",
             'comicId' => $comics,
         ]);

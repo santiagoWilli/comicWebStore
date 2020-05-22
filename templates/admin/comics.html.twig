@@ -4,8 +4,12 @@
 
 {% block body %}
     <h3 class="text-center mt-3">Gestión de cómics</h3>
+
     <div class="table-responsive mt-4 col-auto">
-        <a href="{{ path('addComic') }}" class="btn btn-primary mb-3 float-right">Añadir cómic</a>
+        <div class="d-flex justify-content-center">
+            <a href="{{ path('admin_tags') }}" class="btn btn-warning mb-3 mr-4">Gestionar categorías</a>
+            <a href="{{ path('addComic') }}" class="btn btn-primary mb-3 ml-4">Añadir cómic</a>
+        </div>
         <table id="table_dataTable" class="table table-bordered" style="width: 100%">
             <thead>
             <tr class="table-primary">

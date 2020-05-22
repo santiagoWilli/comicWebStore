@@ -4,7 +4,7 @@
 
 {% block body %}
     {% include 'public/navbar.html.twig' %}
-    <div class="row mt-4">
+    <div class="row mt-4 w-100">
         <div class="col-6">
             <img class="img-fluid w-100 h-100" src="data:image/png;base64,{{ image }}">
         </div>
@@ -24,12 +24,61 @@
                 <input type="hidden" name="comicId" value="{{ comic.id }}">
                 <input type="hidden" name="price" value="{{ comic.price }}">
                 <input type="hidden" name="firstStep" value="pf">
-                <div class="d-inline-block w-100 mt-4">
+                <div class="d-inline-block w-100 mt-4 mb-4">
                     <button class="btn btn-warning" style="width: 49%" formaction="{{ path('payment') }}">Comprar ahora</button>
                     <button class="btn btn-secondary" style="width: 49%" formaction="{{ path('addToShoppingCart') }}">Añadir al carrito</button>
                 </div>
             </form>
             {% endif %}
+
+            {# RENDER COMMENTS#}
+            <div class="col-auto mt-5 mx-auto">
+                <h3>Comentarios</h3>
+                <ul class="mt-4 w-100">
+                    {% if app.user %}
+                        <div class="w-100 mb-5">
+                            <h6>Mi comentario</h6>
+                        {% if (loggedUserComment == null) %}
+                            {# ADD NEW COMMENT#}
+                            <textarea class="form-control" name="addComment" placeholder="Escribe un comentario..."></textarea>
+                            <button class="btn-primary float-right">añadir</button>
+                        {% else %}
+                            {# MODIFY COMMENT #}
+                            <textarea class="form-control" name="modifyComment">{{ loggedUserComment }}</textarea>
+                            <button class="btn btn-sm btn-danger deleteUser float-right" onclick="">
+                                <i class="far fa-trash-alt"></i>
+                            </button>
+                            <button class="btn-primary float-right mx-2">modificar</button>
+                        {% endif %}
+                        </div>
+                    {% endif %}
+
+                    {% if comments|length > 0 %}
+                        {% for key, comment in comments %}
+                            <li class="media mt-4">
+                                {% if (commentsUsers[key].profile_picture != null) %}
+                                    <img class="" src="data:image/png;base64,{{ commentsUsers[key].profile_picture }}" style="border-radius:50%; width:70px; height: 70px">
+                                {% else %}
+                                    <img class="" src="{{ asset(path_default_picture) }}" style="border-radius:50%; width:70px; height: 70px">
+                                {% endif %}
+
+                                <div class="ml-3">
+                                    <div class="row mx-auto">
+                                        <h4>{{ commentsUsers[key].name }} {{ commentsUsers[key].last_name }}</h4>
+                                        <p class="ml-4">{{ comment['date'] | date("d/m/Y") }}</p>
+                                    </div>
+
+                                    <p class="ml-1 font-weight-light">
+                                        {{ comment['comment'] }}
+                                    </p>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    {% else %}
+                        <p>Parece que aun no hay comentarios para este cómic...</p>
+                    {% endif %}
+                </ul>
+            </div>
         </div>
     </div>
 {% endblock %}

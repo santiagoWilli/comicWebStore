@@ -74,5 +74,4 @@ class ComicDataAccess extends DataAccess
             $sql, $params
         );
     }
-
 }

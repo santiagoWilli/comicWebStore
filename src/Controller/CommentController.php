@@ -56,7 +56,6 @@ class CommentController extends AbstractController
         } else {
             $this->addFlash('warning', "Error al crear comentario");
         }
-
     }
 
 }

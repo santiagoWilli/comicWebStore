@@ -44,7 +44,7 @@ class ComicController extends AbstractController
         ]);
     }
 
-    /**
+    /**88
      * @Route("/comics/delete", methods={"POST"}, name="deleteComic")
      * @return Response
      */

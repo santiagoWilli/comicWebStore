@@ -115,13 +115,19 @@ class ComicController extends AbstractController
         $comments = $commentDataAccess->getAllComicComments($id);
         $commentsUsers = array();
 
-        $currentUserId = $this->getUser()->getId();
+        if ($this->getUser() != null){
+            $currentUserId = $this->getUser()->getId();
+        } else{
+            $currentUserId = -1;
+        }
+
         $loggedUserComment = null;
 
         foreach($comments as $key => $comment){
             $userId = $comment['user_id'];
             if ($userId == $currentUserId){
-                $loggedUserComment = $comment;
+                $loggedUserComment = $comment['comment'];
+                unset($comments[$key]);
                 continue;
             }
             $user = $userDataAccess->getUserById($userId);

@@ -1,6 +1,6 @@
 function removeFromShoppingCart(userId, comicId){
     bootbox.confirm({
-        message: "¿Seguro que quieres borrar cómic?",
+        message: "<p class='text-dark'>¿Seguro que quieres eliminarlo del carrito?</p>",
         buttons: {
             confirm: {
                 label: 'Sí',
@@ -35,3 +35,4 @@ function removeFromShoppingCart(userId, comicId){
         }
     });
 }
+

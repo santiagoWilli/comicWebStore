@@ -9,8 +9,8 @@
             <img class="img-fluid w-100 h-100" src="data:image/png;base64,{{ image }}">
         </div>
         <div class="col-6 mt-4">
-            {% for comic in (comic.genre|split(';')) %}
-                <span class="badge badge-warning float-right ml-1">{{ comic }}</span>
+            {% for genre in genres %}
+                <span class="badge badge-warning float-right ml-1">{{ genre["name"] }}</span>
             {% endfor %}
             <br>
             <h2 class="text-center text-warning my-4">{{ comic.title }}</h2>

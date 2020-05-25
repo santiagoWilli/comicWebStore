@@ -4,6 +4,12 @@
 
 {% block body %}
     {% include 'public/navbar.html.twig' %}
+
+    <form method="POST" action="" class="navbar-form navbar-left inline-form">
+        <input id="search" type="text" name="recherche" class="input-sm form-control">
+        <input type="submit" value="Buscar" class="btn-primary btn">
+    </form>
+
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 mt-5 mx-2">
     {% for key, comic in comicList %}
             <div class="col mb-4">

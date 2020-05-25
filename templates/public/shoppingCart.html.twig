@@ -30,7 +30,7 @@
                         <td>{{ item.amount }} <input type="hidden" name="amount-{{ key }}" value="{{ item.amount }}"></td>
                         <td>{{ item.amount * item.comic.price }} €</td>
                         <td>
-                            <button class="btn btn-sm btn-danger deleteCart" onclick="removeFromShoppingCart({{ userId }}, {{ item.comic.id }})">
+                            <button class="btn btn-sm btn-danger deleteCart" onclick="removeFromShoppingCart({{ userId }}, {{ item.comic.id }}); return false;">
                                 <i class="far fa-trash-alt"></i>
                             </button>
                         </td>

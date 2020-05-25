@@ -34,4 +34,14 @@ class CommentsDataAccess extends DataAccess
             "date" => date("Y-m-d H:i:s"),
         ]);
     }
+
+    public function deleteComment($user_id, $comic_id, $comment)
+    {
+        return parent::executeSQL("DELETE FROM comments WHERE comment = :comment
+                                            AND user_id = :id AND comic_id = :comicId;", [
+            "id" => $user_id,
+            "comicId" => $comic_id,
+            "comment" => $comment,
+        ]);
+    }
 }

@@ -24,4 +24,14 @@ class WishlistController extends AbstractController
 
         return $this->render('public/wishlist.html.twig');
     }
+
+    public function removeFromWishList(WishListDataAccess $wishListDataAccess, Request $request) {
+        $success = false;
+        if($request->request->has("comicId")){
+            $success = $wishListDataAccess->deleteItemFromWishList($request->request->get("userId"),
+                $request->request->get("comicId"));
+        }
+        return new JsonResponse(json_encode($success));
+    }
 }
+

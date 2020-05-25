@@ -44,17 +44,17 @@
                             <form method="post">
                                 <input type="text" class="form-control" name="comment" id="comment" placeholder="Escribe un comentario...">
                                 <input type="hidden" name="comicId" id="comicId" value="{{ comic.id }}">
-                                <button class="btn-primary float-right" formaction="{{ path('addComment') }}">Añadir</button>
+                                <button class="btn-primary btn btn-sm float-right" formaction="{{ path('addComment') }}">Añadir</button>
                             </form>
                         {% else %}
                             {# MODIFY COMMENT #}
                             <form method="post">
                                 <textarea class="form-control" name="modifyComment">{{ loggedUserComment }}</textarea>
-                                <button class="btn btn-sm btn-danger deleteUser float-right" onclick="">
+                                <button class="btn btn-sm btn-danger deleteUser float-right" formaction="{{ path('deleteComment') }}" style="margin-left: 4px">
                                     <i class="far fa-trash-alt"></i>
                                 </button>
                                 <input type="hidden" name="comicId" id="comicId" value="{{ comic.id }}">
-                                <button class="btn-primary float-right"formaction="{{ path('editComment') }}">Modificar</button>
+                                <button class="btn-primary btn btn-sm float-right"formaction="{{ path('editComment') }}">Modificar</button>
                             </form>
                         {% endif %}
                         </div>

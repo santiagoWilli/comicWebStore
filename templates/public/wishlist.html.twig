@@ -2,6 +2,44 @@
 
 {% block body %}
 
-<h1>Lista de deseos</h1>
+    {% include 'public/navbar.html.twig' %}
 
+    <div class="shoppingcart m-2 px-2 py-3">
+        <table id="table_dataTable" class="table table-bordered" style="width: 100%">
+            <thead>
+            <tr class="table-primary">
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for comic in comics %}
+                <tr>
+                    <td><a href="{{ path('comicInfo', {'id': comic.comic.id}) }}">{{ comic.comic.title }}</a></td>
+                    <td>{{ comic.comic.price }} €</td>
+                    <td>
+                        <button class="btn btn-sm btn-danger deleteCart">
+                            <i class="far fa-trash-alt"></i>
+                        </button>
+                        <!-- AÑADIR AL CARRITO
+                        <button class="btn btn-sm btn-primary">
+                            <i class="fas fa-cart-plus"></i>
+                        </button>
+                        -->
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready( function () {
+            $('#table_dataTable').DataTable({
+            });
+        });
+    </script>
 {% endblock %}

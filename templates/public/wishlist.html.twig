@@ -5,6 +5,7 @@
     {% include 'public/navbar.html.twig' %}
 
     <div class="shoppingcart m-2 px-2 py-3">
+        <form method="post">
         <table id="table_dataTable" class="table table-bordered" style="width: 100%">
             <thead>
             <tr class="table-primary">
@@ -19,7 +20,7 @@
                     <td><a href="{{ path('comicInfo', {'id': comic.comic.id}) }}">{{ comic.comic.title }}</a></td>
                     <td>{{ comic.comic.price }} €</td>
                     <td>
-                        <button class="btn btn-sm btn-danger deleteCart">
+                        <button class="btn btn-sm btn-danger deleteCart" onclick="removeFromWishList({{ userId }}, {{ comic.comic.id }}); return false;">
                             <i class="far fa-trash-alt"></i>
                         </button>
                         <!-- AÑADIR AL CARRITO
@@ -32,10 +33,12 @@
             {% endfor %}
             </tbody>
         </table>
+        </form>
     </div>
 {% endblock %}
 
 {% block javascripts %}
+    <script src="{{ asset('assets/js/delete-comic-wishlist.js') }}"></script>
     <script>
         $(document).ready( function () {
             $('#table_dataTable').DataTable({

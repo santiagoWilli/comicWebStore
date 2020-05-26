@@ -7,6 +7,7 @@ namespace App\Controller;
 use App\Service\ComicDataAccess;
 use App\Service\WishlistDataAccess;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -49,10 +50,14 @@ class WishlistController extends AbstractController
         ]);
     }
 
-    public function removeFromWishList(WishListDataAccess $wishListDataAccess, Request $request) {
+    /**
+     * @Route("user/wishlist/remove", methods={"POST"}, name="removeFromWishList")
+     * @return Response
+     */
+    public function removeFromWishList(WishlistDataAccess $wishlistDataAccess, Request $request) {
         $success = false;
         if($request->request->has("comicId")){
-            $success = $wishListDataAccess->deleteItemFromWishList($request->request->get("userId"),
+            $success = $wishlistDataAccess->deleteItemFromWishList($request->request->get("userId"),
                 $request->request->get("comicId"));
         }
         return new JsonResponse(json_encode($success));

@@ -1,21 +1,25 @@
 <?php
 
 namespace App\Twig;
-use App\Service\CursosDataAccess;
-use App\Service\EmpresaDataAccess;
-use App\Service\UserDataAccess;
-use App\Service\UsuarioDataAccess;
+use App\Service\ComicDataAccess;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
-use Twig\TwigFunction;
 
 class customFilters extends AbstractExtension {
+
+    private $comicDataAccess;
+
+    public function __construct(ComicDataAccess $comicDataAccess)
+    {
+        $this->comicDataAccess = $comicDataAccess;
+    }
 
     /*Filtros*/
     public function getFilters() {
         return array(
             new TwigFilter('role', [$this, 'getUserRole']),
             new TwigFilter('serialize', [$this, 'serialize']),
+            new TwigFilter('genres', [$this, 'getComicGenres']),
         );
     }
 
@@ -30,6 +34,10 @@ class customFilters extends AbstractExtension {
 
     public function serialize($input) {
         return base64_encode(serialize($input));
+    }
+
+    public function getComicGenres($input) {
+        return $this->comicDataAccess->getTagsFromComic($input);
     }
 
 }

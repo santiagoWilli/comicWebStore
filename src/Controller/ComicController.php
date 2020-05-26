@@ -190,8 +190,16 @@ class ComicController extends AbstractController
     public function editComic($id, ComicDataAccess $dataAccess, Request $request) {
 
         $comic_array= $dataAccess->getComicById($id);
+        $genresData = $dataAccess->getTagsFromComic($id);
+        $genres = "";
+        foreach ($genresData as $genre) {
+            $genres = $genres . $genre["name"] . ";";
+        }
+        $genres = trim($genres, ";");
+
+
         $comic = new Comic($comic_array["title"], $comic_array["description"], $comic_array["price"],
-            $comic_array["publisher"], $comic_array["genre"], $comic_array["release_date"], $comic_array["stock"],
+            $comic_array["publisher"], $genres, $comic_array["release_date"], $comic_array["stock"],
             $comic_array["author"]);
 
         $form = $this->createForm(EditComicType::class, $comic);

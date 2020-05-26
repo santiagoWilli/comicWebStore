@@ -34,7 +34,11 @@
                     <td>{{ comic.description }}</td>
                     <td>{{ comic.price }}</td>
                     <td>{{ comic.publisher }}</td>
-                    <td>{{ comic | genre }}</td>
+                    <td>
+                        {% for genre in (comic.id | genres) %}
+                            {{ genre.name }},
+                        {% endfor %}
+                    </td>
                     <td>{{ comic.release_date | date("d/m/Y") }}</td>
                     <td>{{ comic.stock }}</td>
                     <td>{{ comic.author }}</td>

@@ -21,4 +21,10 @@ class WishlistDataAccess extends DataAccess
         ]);
     }
 
+
+    public function getUserWishlist($id) {
+        return parent::executeSQL("SELECT * FROM wishlist WHERE user_id = :id;", [
+            "id" => $id
+        ])->fetchAll();
+    }
 }

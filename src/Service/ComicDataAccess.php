@@ -104,3 +104,4 @@ class ComicDataAccess extends DataAccess
         )->fetchAll();
     }
 }
+

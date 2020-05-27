@@ -1,0 +1,17 @@
+{% extends "/public/base.html.twig" %}
+
+{% block title %} Categorías de cómics {% endblock %}
+
+{% block body %}
+    <h3 class="text-center mt-3">Categorías de cómics</h3>
+
+    <div style="margin-top: 40px; margin-left: 25%;">
+        <ul>
+            {% for tag in tags %}
+                <li style="list-style-type: none;" class="my-1">
+                    <a href="{{ path('comicWithTag', {tag: tag["name"]}) }}" class="btn btn-warning">{{ tag["name"] }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

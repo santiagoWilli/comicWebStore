@@ -13,4 +13,17 @@ class WishlistDataAccess extends DataAccess
             "user_id" => $userId,
         ]);
     }
+
+    public function deleteItemFromWishList($user_id, $comic_id) {
+        return parent::executeSQL("DELETE FROM wishlist WHERE comic_id = :comicId AND user_id = :userId;", [
+            "comicId" => $comic_id,
+            "userId" => $user_id,
+        ]);
+    }
+
+    public function getUserWishlist($id) {
+        return parent::executeSQL("SELECT * FROM wishlist WHERE user_id = :id;", [
+            "id" => $id
+        ])->fetchAll();
+    }
 }

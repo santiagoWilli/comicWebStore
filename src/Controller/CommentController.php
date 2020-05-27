@@ -69,5 +69,19 @@ class CommentController extends AbstractController
             "id" => $idcomic]);
     }
 
+    /**
+     * @Route("/public/deleteComment", methods={"POST"}, name="deleteComment")
+     * @return Response
+     */
+    public function deleteComment(CommentsDataAccess $dataAccess, Request $request){
+        $iduser = $this->getUser()->getId();
+        $idcomic = $request->request->get('comicId');
+        $comment = $request->request->get('modifyComment');
+        $dataAccess->deleteComment($iduser, $idcomic, $comment);
+
+        return $this->redirectToRoute('comicInfo',[
+            "id" => $idcomic]);
+    }
+
 
 }

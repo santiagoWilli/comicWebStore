@@ -82,7 +82,7 @@ class ComicController extends AbstractController
     }
 
     /**
-     * @Route("/user/listcomics", name="listComicsAsUser")
+     * @Route("/comics", name="listComicsAsUser")
      * @param ComicDataAccess $dataAccess
      * @return Response
      */
@@ -105,7 +105,43 @@ class ComicController extends AbstractController
     }
 
     /**
-     * @Route("/user/comicInfo/{id}", name="comicInfo")
+     * @Route("/comics/tags", name="comicTags")
+     * @param ComicDataAccess $dataAccess
+     * @return Response
+     */
+    public function comicsTags(ComicDataAccess $dataAccess) {
+        $tags = $dataAccess->getTags();
+
+        return $this->render('public/tags.html.twig', [
+            "tags" => $tags,
+        ]);
+    }
+
+    /**
+     * @Route("/comics/tag/{tag}", name="comicWithTag")
+     * @param ComicDataAccess $dataAccess
+     * @return Response
+     */
+    public function comicsWithTag($tag, ComicDataAccess $dataAccess) {
+        $comics = $dataAccess->getComicsWithTag($tag);
+
+        $images = array();
+        foreach ($comics as $key => $comic) {
+            if ($comic['image'] == null){
+                $images[$key] = null;
+                continue;
+            }
+            $images[$key] = base64_encode($comic['image']);
+        }
+
+        return $this->render('public/comics.html.twig', [
+            "comicList" => $comics,
+            "images" => $images,
+        ]);
+    }
+
+    /**
+     * @Route("/comic/{id}", name="comicInfo")
      * @return Response
      */
     public function showComicInfo($id, ComicDataAccess $dataAccess, CommentsDataAccess $commentDataAccess, UserDataAccess $userDataAccess){
@@ -135,9 +171,12 @@ class ComicController extends AbstractController
             $commentsUsers[$key] = $user;
         }
 
+        $genres = $dataAccess->getTagsFromComic($id);
+
         return $this->render('public/comicInfo.html.twig', [
             "comic" => $comic,
             "image" => $image,
+            "genres" => $genres,
             "loggedUserComment" => $loggedUserComment,
             "comments" => $comments,
             "commentsUsers" => $commentsUsers,
@@ -151,8 +190,16 @@ class ComicController extends AbstractController
     public function editComic($id, ComicDataAccess $dataAccess, Request $request) {
 
         $comic_array= $dataAccess->getComicById($id);
+        $genresData = $dataAccess->getTagsFromComic($id);
+        $genres = "";
+        foreach ($genresData as $genre) {
+            $genres = $genres . $genre["name"] . ";";
+        }
+        $genres = trim($genres, ";");
+
+
         $comic = new Comic($comic_array["title"], $comic_array["description"], $comic_array["price"],
-            $comic_array["publisher"], $comic_array["genre"], $comic_array["release_date"], $comic_array["stock"],
+            $comic_array["publisher"], $genres, $comic_array["release_date"], $comic_array["stock"],
             $comic_array["author"]);
 
         $form = $this->createForm(EditComicType::class, $comic);

@@ -20,14 +20,17 @@
                     <td><a href="{{ path('comicInfo', {'id': comic.comic.id}) }}">{{ comic.comic.title }}</a></td>
                     <td>{{ comic.comic.price }} €</td>
                     <td>
-                        <button class="btn btn-sm btn-danger deleteCart" onclick="removeFromWishList({{ userId }}, {{ comic.comic.id }}); return false;">
-                            <i class="far fa-trash-alt"></i>
-                        </button>
-                        <!-- AÑADIR AL CARRITO
-                        <button class="btn btn-sm btn-primary">
-                            <i class="fas fa-cart-plus"></i>
-                        </button>
-                        -->
+                        <form class="mt-2" method="post">
+                            <button class="btn btn-sm btn-danger deleteCart" onclick="removeFromWishList({{ userId }}, {{ comic.comic.id }}); return false;">
+                                <i class="far fa-trash-alt"></i>
+                            </button>
+
+                            <input type="hidden" name="comicId" value="{{ comic.comic.id }}">
+                            <input type="hidden" name="amount" value="1">
+                            <button class="btn btn-sm btn-primary" formaction="{{ path('addToShoppingCart') }}">
+                                <i class="fas fa-cart-plus"></i>
+                            </button>
+                        </form>
                     </td>
                 </tr>
             {% endfor %}

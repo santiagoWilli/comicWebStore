@@ -51,6 +51,7 @@ class WishlistController extends AbstractController
         ]);
     }
 
+
     /**
      * @Route("user/wishlist/remove", methods={"POST"}, name="removeFromWishList")
      * @return Response

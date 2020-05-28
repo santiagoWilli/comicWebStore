@@ -124,5 +124,11 @@ class ComicDataAccess extends DataAccess
             ]
         )->fetchAll();
     }
+
+    public function search($comic_title) {
+        return parent::executeSQL("SELECT * FROM comics WHERE title LIKE (:comic_title)", [
+            "comic_title" => '%'.$comic_title.'%',
+        ])->fetchAll();
+    }
 }
 

@@ -5,8 +5,8 @@
 {% block body %}
     {% include 'public/navbar.html.twig' %}
 
-    <form method="POST" action="" class="navbar-form navbar-left inline-form">
-        <input id="search" type="text" name="recherche" class="input-sm form-control">
+    <form method="POST" action="{{ path('searchComic') }}" class="navbar-form navbar-left inline-form">
+        <input id="search" type="text" name="searchTerm" style="width: 20%; display: inline !important;" class="ml-5 input-sm form-control">
         <input type="submit" value="Buscar" class="btn-primary btn">
     </form>
 

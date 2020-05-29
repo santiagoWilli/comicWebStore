@@ -220,4 +220,26 @@ class ComicController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    /**
+     * @Route("/comics/search", methods={"POST"}, name="searchComic")
+     * @return Response
+     */
+    public function searchComic(ComicDataAccess $dataAccess, Request $request) {
+        $search_term = $request->request->get('searchTerm');
+        $comics = $dataAccess->search($search_term);
+        $images = array();
+        foreach ($comics as $key => $comic) {
+            if ($comic['image'] == null){
+                $images[$key] = null;
+                continue;
+            }
+            $images[$key] = base64_encode($comic['image']);
+        }
+
+        return $this->render('public/comics.html.twig', [
+            'comicList' => $comics,
+            'images' => $images,
+        ]);
+    }
 }
